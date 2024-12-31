@@ -1,0 +1,17 @@
+import { InvoiceType } from "@/types/types";
+
+export const initialInvoices: InvoiceType[] = [
+    {id: "RT3080", city: "Kolkata",clientCity: "San Diego", clientCountry: "USA",clientEmail: "abc@gmail.com",clientName: "Jensen Huang",clientPostCode: 741524 ,clientStreetAddress: "Avenue ragdf",country: "India",invoiceDate: "2021-01-29", paymentTerms: 10, dueDate: "2024-08-12", postCode: 891245 ,projectDescription: "Graphic Project",streetAddress: "Salt Lake",itemList: [{itemName: "item1", quantity: 2, price: 150}], dueAmount: 300, status: "paid" },
+
+    {id: "XM9141", city: "Kolkata",clientCity: "San Diego", clientCountry: "USA",clientEmail: "abc@gmail.com",clientName: "Thomas Wyane",clientPostCode: 741524 ,clientStreetAddress: "Avenue ragdf",country: "India",invoiceDate: "2018-05-20", paymentTerms: 15, dueDate: "2021-01-29", postCode: 891245 ,projectDescription: "Graphic Project",streetAddress: "Salt Lake",itemList: [{itemName: "item1", quantity: 3, price: 400}, {itemName: "item2", quantity: 1, price: 500}], dueAmount: 1700, status: "pending" },
+
+    {id: "RG0314", city: "Kolkata",clientCity: "San Diego", clientCountry: "USA",clientEmail: "abc@gmail.com",clientName: "Alex Grim",clientPostCode: 741524 ,clientStreetAddress: "Avenue ragdf",country: "India",invoiceDate: "2019-12-30", paymentTerms: 20, dueDate: "2018-05-20", postCode: 891245 ,projectDescription: "Graphic Project",streetAddress: "Salt Lake",itemList: [{itemName: "item1", quantity: 5, price: 100}, {itemName: "item2", quantity: 2, price: 800}, {itemName: "item3", quantity: 1, price: 400}], dueAmount: 2500, status: "paid" },
+
+    {id: "RT2080", city: "Kolkata",clientCity: "San Diego", clientCountry: "USA",clientEmail: "abc@gmail.com",clientName: "John Morrison",clientPostCode: 741524 ,clientStreetAddress: "Avenue ragdf",country: "India",invoiceDate: "2019-12-30", paymentTerms: 25, dueDate: "2025-10-09", postCode: 891245 ,projectDescription: "Graphic Project",streetAddress: "Salt Lake",itemList: [{itemName: "item1", quantity: 2, price: 150}], dueAmount: 300, status: "pending" },
+
+    {id: "AA1449", city: "Kolkata",clientCity: "San Diego", clientCountry: "USA",clientEmail: "abc@gmail.com",clientName: "Alesa Werner",clientPostCode: 741524 ,clientStreetAddress: "Avenue ragdf",country: "India",invoiceDate: "2018-12-30", paymentTerms: 26, dueDate: "2019-12-30", postCode: 891245 ,projectDescription: "Graphic Project",streetAddress: "Salt Lake",itemList: [{itemName: "item1", quantity: 1, price: 1000}], dueAmount: 1000, status: "pending" },
+
+    {id: "Y9141", city: "Kolkata",clientCity: "San Diego", clientCountry: "USA",clientEmail: "abc@gmail.com",clientName: "Melissa Clarke",clientPostCode: 741524 ,clientStreetAddress: "Avenue ragdf",country: "India",invoiceDate: "2021-11-02", paymentTerms: 100, dueDate: "2024-11-02", postCode: 891245 ,projectDescription: "Graphic Project",streetAddress: "Salt Lake",itemList: [{itemName: "item1", quantity: 10, price: 50}], dueAmount: 500, status: "pending" },
+
+    {id: "FB2353", city: "Kolkata",clientCity: "San Diego", clientCountry: "USA",clientEmail: "abc@gmail.com",clientName: "Alex Grim",clientPostCode: 741524 ,clientStreetAddress: "Avenue ragdf",country: "India",invoiceDate: "2015-11-02", paymentTerms: 200, dueDate: "2024-04-01", postCode: 891245 ,projectDescription: "Graphic Project",streetAddress: "Salt Lake",itemList: [{itemName: "item1", quantity: 10, price: 300}], dueAmount: 3000, status: "paid" },
+]
