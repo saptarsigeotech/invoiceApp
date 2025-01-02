@@ -12,8 +12,8 @@ const App = () => {
     </header>
     <main className="bg-slate-900 pt-6 px-5 md:px-0 h-full min-h-screen md:w-screen relative overflow-hidden">
      <Routes>
-     <Route path="/" element={<HomePage/>}/>
-      <Route path="/viewInvoice/:id" element={<ViewInvoice/>}/>
+     <Route path="invoiceApp/" element={<HomePage/>}/>
+      <Route path="invoiceApp/viewInvoice/:id" element={<ViewInvoice/>}/>
      </Routes>
     </main>
     </div>

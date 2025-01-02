@@ -18,7 +18,7 @@ const Card = (props: InvoiceForCard ) => { //this component is a blueprint for e
   // }
 
   return (
-    <Link to={`/viewInvoice/${id}`}>
+    <Link to={`viewInvoice/${id}`}>
     <div className="p-8 bg-slate-800 rounded-lg text-md flex flex-col md:flex-row md:justify-between gap-4 md:text-lg shadow-md shadow-slate-950">
       <div className="flex items-center justify-between w-full md:w-1/3">
         <p className="font-bold"><span className="text-slate-600 font-normal">#</span>{id}</p>
