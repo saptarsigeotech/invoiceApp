@@ -32,7 +32,7 @@ export const invoiceSlice = createSlice({
                 projectDescription: action.payload.projectDescription,
                 streetAddress: action.payload.streetAddress,
                 itemList: action.payload.itemList,
-                dueAmount: action.payload.itemList.length> 0 && action.payload.itemList.map((item: {quantity: number , price: number}) => item.quantity * item.price).reduce((total: number, currVal: number) => total + currVal),
+                dueAmount: action.payload.itemList?.length> 0 && action.payload.itemList?.map((item: {quantity: number , price: number}) => item.quantity * item.price).reduce((total: number, currVal: number) => total + currVal),
                 status: "pending",
             }
             state.invoices.push(newInvoice);
@@ -59,7 +59,7 @@ export const invoiceSlice = createSlice({
                 state.invoices[index] = {
                     ...state.invoices[index],
                     ...updatedInvoice,   
-                    dueAmount: updatedInvoice.itemList.length > 0 && updatedInvoice.itemList.map((item: {quantity: number, price: number}) => item.quantity * item.price).reduce((total: number, currVal: number) => total + currVal),
+                    dueAmount: updatedInvoice.itemList?.length > 0 && updatedInvoice.itemList?.map((item: {quantity: number, price: number}) => item.quantity * item.price).reduce((total: number, currVal: number) => total + currVal),
                     dueDate: calculateDueDate(updatedInvoice.invoiceDate, updatedInvoice.paymentTerms), // Recalculate due date
                 };
             }

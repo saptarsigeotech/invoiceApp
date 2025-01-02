@@ -33,7 +33,7 @@ const ViewInvoice = () => {
 
 
   //destructuring invoice information from the current invoice
-  const calculateDueAmount = (arr: { price: number | null, quantity: number | null }[]) : number => arr.map(item => (item.price?? 0) * (item.quantity ?? 0)).reduce((total: number, currVal: number) => total + currVal); //calulating the amount due for particular invoice
+  const calculateDueAmount = (arr: { price: number | null, quantity: number | null }[]) : number => arr?.map(item => (item.price?? 0) * (item.quantity ?? 0)).reduce((total: number, currVal: number) => total + currVal); //calulating the amount due for particular invoice
 
   const capitalize = (str: string) => str.charAt(0).toUpperCase() + str.slice(1); //function for capitalizing a string
 
@@ -166,7 +166,7 @@ const ViewInvoice = () => {
           </div>
           <div className="flex items-center justify-between p-4 bg-slate-950 rounded-b-lg">
             <p className="text-slate-500">Amount Due</p>
-            <h3 className="text-xl overflow-x-auto">{itemList.length > 0 ? formatToPound(calculateDueAmount(itemList)) : 0}</h3>
+            <h3 className="text-xl overflow-x-auto">{itemList?.length > 0 ? formatToPound(calculateDueAmount(itemList)) : 0}</h3>
           </div>
         </div>
       </div>

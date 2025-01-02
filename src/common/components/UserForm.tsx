@@ -155,7 +155,7 @@ const UserForm = (props: UserFormPorps)=> {
             <h3 className="text-lg font-bold text-slate-400 mb-2">Item List</h3>
     
               {/* Listing inovice items dynamically */}
-              {fields.length > 0 && 
+              {fields?.length > 0 && 
               <div className="grid grid-cols-9 gap-3 text-slate-500">
                 <p className="col-span-4 md:col-span-3">Item Name</p>
                 <p className="col-span-2 3xl:col-span-1">Qty.</p>
@@ -166,7 +166,7 @@ const UserForm = (props: UserFormPorps)=> {
              
     
                 <div className="flex flex-col gap-3 md:gap-5 my-2">
-                  {fields.map((field, index) => (
+                  {fields?.map((field, index) => (
                     <div key={field.id} className="grid grid-cols-9 gap-3 md:gap-5 items-center font-bold text-slate-200">
     
                       <input type="text" className={`col-span-4 md:col-span-3 ${itemInputStyle}`}{...register(`itemList.${index}.itemName` as const, {required: {value: true, message: "Item name is required"}})}/>
