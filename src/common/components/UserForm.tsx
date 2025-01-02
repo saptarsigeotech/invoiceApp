@@ -180,7 +180,7 @@ const UserForm = (props: UserFormPorps)=> {
                       <input type="number" className={`col-span-3 md:col-span-2 3xl:col-span-2 ${itemInputStyle}`} {...register(`itemList.${index}.price` as const, {required: {value: true, message: "Item price is required"}})}/>
                       
 
-                      <p className="col-span-8 md:col-span-1 3xl:col-span-2 px-auto text-wrap">{formatToPound((watch(`itemList.${index}.quantity`) ??  0) * (watch(`itemList.${index}.price`) ?? 0))}</p>
+                      <p className="col-span-8 md:col-span-1 3xl:col-span-2 px-auto truncate">{formatToPound((watch(`itemList.${index}.quantity`) ??  0) * (watch(`itemList.${index}.price`) ?? 0))}</p>
                       <button type="button" onClick={() => remove(index)} className="col-span-1 mr-0 flex justify-end text-slate-700 hover:text-red-600"><MdDelete/></button>
                     </div>
                   ))}
