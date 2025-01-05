@@ -9,14 +9,6 @@ const Card = (props: InvoiceForCard ) => { //this component is a blueprint for e
 
   const capitalize = (str: string | undefined) => typeof str === "string" && str.charAt(0).toUpperCase() + str.slice(1); //function for capitalizing a string
 
-  // const shortFormatting = (number) => {
-  //   const nmbrToStr = number.toString()
-  //   if(nmbrToStr.length > 4){
-  //     return nmbrToStr.slice(0,4) + "..."
-  //   }
-  //   return nmbrToStr.
-  // }
-
   return (
     <Link to={`viewInvoice/${id}`}>
     <div className="p-8 bg-slate-800 rounded-lg text-md flex flex-col md:flex-row md:justify-between gap-4 md:text-lg shadow-md shadow-slate-950">

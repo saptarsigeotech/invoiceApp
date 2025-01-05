@@ -1,9 +1,10 @@
-import { ReactNode } from "react";
+import { MouseEventHandler, ReactNode } from "react";
 
 //type for Modal used in ViewInvoice.tsx and HomePage.tsx
 export type ModalType = {
   showModal: boolean;
   children: ReactNode;
+  handleClose?: () => void;
 };
 
 //type for user form
@@ -21,7 +22,7 @@ export type invoiceItem = {
 
 //type for adding invoice
 export type InvoiceType = {
-  id?: string | undefined;
+  id?: string;
   city: string;
   clientCity: string;
   clientCountry: string;
@@ -32,7 +33,7 @@ export type InvoiceType = {
   country: string;
   invoiceDate: string;
   paymentTerms: number;
-  dueDate?: string;
+  dueDate?: string | undefined;
   postCode: number;
   projectDescription: string;
   streetAddress: string;
@@ -50,3 +51,9 @@ export type InvoiceForCard = {
     status: string | undefined;
 }
 
+
+export type ButtonType = {
+  children: React.ReactNode,
+  onClick?: MouseEventHandler<HTMLButtonElement>,
+  variant: string
+}

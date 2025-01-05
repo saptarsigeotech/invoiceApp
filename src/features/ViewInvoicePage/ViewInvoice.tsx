@@ -4,10 +4,12 @@ import { FaChevronLeft } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import Modal from "@/common/components/Modal.tsx";
 import { useDispatch, useSelector } from "react-redux";
-import { markAsPaid, removeInvoice } from "../invoice/invoiceSlice.ts";
+import { markAsPaidThunk, removeInvoiceThunk } from "../invoice/invoiceSlice.ts";
 import { RootState } from "@/store/store.ts";
 import { formatToPound } from "@/common/utils/utils.ts";
-import UserForm from "@/common/components/UserForm.tsx";
+import InvoiceForm from "@/common/components/InvoiceForm.tsx";
+import Button from "@/common/components/Button/Button.tsx";
+import { AppDispatch } from "@/store/store.ts";
 
 const ViewInvoice = () => {
 
@@ -20,9 +22,9 @@ const ViewInvoice = () => {
       sessionStorage.setItem("showModalEditInvoice", JSON.stringify(showModal));
     }, [showModal]);
 
-  const invoiceId: string | undefined = useParams().id; //extracting the id of the invoice from the URL
+  const invoiceId = useParams().id; //extracting the id of the invoice from the URL
 
-  const storeInvoiceData = useSelector((state : RootState) => state.invoices) // getting all invoices from redux store with useSelector hook
+  const storeInvoiceData = useSelector((state : RootState) => state.invoices.invoices) // getting all invoices from redux store with useSelector hook
   
 
   const currentInvoice = storeInvoiceData?.filter((invoice) => invoice.id === invoiceId)[0]; //extracting the invoice from the by filtering the id
@@ -45,11 +47,8 @@ const ViewInvoice = () => {
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const modalState = params.get("modal");
-    if (modalState === "true") {
-      setShowModal(true);
-    } else {
-      setShowModal(false);
-    }
+    return modalState === "true" ? setShowModal(true) : setShowModal(false)
+
   }, [location]);
 
 
@@ -59,18 +58,20 @@ const ViewInvoice = () => {
     navigate(`?modal=true`, { replace: true }); // Update URL with modal=true
   }
 
-  const dispatch = useDispatch(); //hook for using reducer functions 
+  const dispatch = useDispatch< AppDispatch >(); //hook for using reducer functions 
   const navigate = useNavigate(); //hook for navigating to diferrent paths/ routes
 
   //function for deleting the invoice
   const handleDelete = (id: string | undefined) => {
-      dispatch(removeInvoice(id));
-      navigate("/");
+      if(id){
+      dispatch(removeInvoiceThunk(id));
+      navigate("/invoiceApp");
+      } 
   }
 
   //function to make the status of invoice as paid
   const handleMarkAsPaid = (id: string | undefined) => {
-    dispatch(markAsPaid(id));
+    if(id) return dispatch(markAsPaidThunk(id));
   }
 
   // function for closing modal
@@ -96,10 +97,12 @@ const ViewInvoice = () => {
           </div>
         </div>
         <div className="flex justify-end gap-4 font-bold mt-4 md:mt-0">
-          {/* all the buttons , Edit, Delete, Mark as Paid button for the invoice*/}
-          <button className="bg-slate-700 py-2 px-4 w-20 rounded-full bg-opacity-50 hover:bg-slate-900" onClick={handleEdit}>Edit</button>
-          <button className="bg-red-600 py-2 px-4 rounded-full hover:bg-red-800" onClick={() => handleDelete(invoiceId)}>Delete</button>
-          <button className="bg-indigo-500/100 py-1 sm:py-2 px-4 rounded-full text-sm sm:text-md hover:bg-indigo-600/100" onClick={() => handleMarkAsPaid(invoiceId)}>{status === "paid" ? "Mark as Pending" : "Mark as Paid" }</button>
+          
+          <Button variant="edit" onClick={handleEdit}>Edit</Button>
+          <Button variant="delete" onClick={() => handleDelete(invoiceId)}>Delete</Button>
+          <Button variant="markAsPaid" onClick={() => handleMarkAsPaid(invoiceId)}>{status === "paid" ? "Mark as Pending" : "Mark as Paid" }</Button>
+          
+          
         </div>
       </div>
 
@@ -127,10 +130,10 @@ const ViewInvoice = () => {
             </div>
           </div>
           <div className="flex flex-col md:flex-row flex-1 gap-4 justify-between md:justify-start text-right md:text-left md:col-span-2 md:grid md:grid-cols-2">
-              <div>
+              <div className="space-x-2">
                 <p className="text-slate-500 font-normal">Bill To</p>
                 <h3>{clientName}</h3>
-                <p  className="text-wrap">{clientStreetAddress}, {clientCountry}</p>
+                <p  className="text-wrap md:w-1/2">{clientStreetAddress}, {clientCountry}</p>
               </div>
             <div>
               <p className="text-slate-500 font-normal">Sent To</p>
@@ -172,8 +175,8 @@ const ViewInvoice = () => {
       </div>
       
       {showModal && 
-      <Modal showModal={showModal}>
-          <UserForm handleModalClose={handleClose} id={invoiceId}/>
+      <Modal showModal={showModal} handleClose={handleClose}>
+          <InvoiceForm handleModalClose={handleClose} id={invoiceId}/>
         </Modal>} 
     </div>
   )

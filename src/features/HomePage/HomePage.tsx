@@ -10,7 +10,7 @@ import { FaFileInvoice } from "react-icons/fa6";
 import { MdOutlineDensitySmall } from "react-icons/md";
 import { AiOutlineFileDone } from "react-icons/ai";
 import { GiSandsOfTime } from "react-icons/gi";
-import UserForm from "@/common/components/UserForm";
+import InvoiceForm from "@/common/components/InvoiceForm";
 import { useLocation, useNavigate } from "react-router-dom";
 
 
@@ -26,8 +26,9 @@ const HomePage = () => {
 
   const [showFilterList, setShowFilterList] = useState<boolean>(false); //for displaying filter list (drop down, filter by status list)
 
-  const currentInvoicesData  = useSelector((state: RootState) => state.invoices) //getting all invoices from store
-    
+  const currentInvoicesData  = useSelector((state: RootState) => state.invoices.invoices) //getting all invoices from store
+  console.log("Invoices in Component:", currentInvoicesData)
+
   const [invoicesData, setInvoicesData] = useState<InvoiceType[] | []>(currentInvoicesData) //useState for displaying invoices list
 
   const [filteredInvoicesData, setFilteredInvoicesData] = useState(invoicesData); //filtered data for dropdown list
@@ -94,7 +95,7 @@ const HomePage = () => {
     }
 
   return (
-    <div className={`mt-3 md:px-16 md:flex md:flex-col md:items-stretch md:mx-auto lg:m-10 xl:w-[1100px] xl:mx-auto ${showModal ? "bg-opacity-10 overflow-y-auto" : "bg-opacity-100"}`}>
+    <div className={`mt-6 md:pt-6 md:px-16 md:flex md:flex-col md:items-stretch md:mx-auto lg:m-10 xl:w-[1100px] xl:mx-auto ${showModal ? "bg-opacity-10 overflow-y-auto" : "bg-opacity-100"}`}>
       <div className="text-slate-100 flex items-start justify-between">
         <div>
           <h3 className="text-2xl md:text-3xl font-bold">Invoices</h3>
@@ -149,7 +150,7 @@ const HomePage = () => {
       </div>
       <div>
         {showModal && <Modal showModal={showModal}>
-          <UserForm handleModalClose={handleClose}/>
+          <InvoiceForm handleModalClose={handleClose}/>
         </Modal>}
       </div>
     </div>
