@@ -112,9 +112,9 @@ const InvoiceForm = (props: UserFormPorps)=> {
 
               <LabelInput label="Invoice Date" type="date" placeholder="client country name" keyName="invoiceDate" requiredMessage="invoice date" register={register} errors={errors}/>
 
-              <div>
-                <LabelInput parentDivClassName="flex flex-col items-start relative" label="Payment Terms" type="number" placeholder="30 Days" keyName="paymentTerms" requiredMessage="payment terms" register={register} errors={errors} minValue={0} minMessage="Payment terms cannot be negative"/>
-              </div>
+              
+              <LabelInput parentDivClassName="flex flex-col items-start relative" label="Payment Terms" type="number" min="0" placeholder="ex. 30 days" keyName="paymentTerms" requiredMessage="payment terms" register={register} errors={errors} minValue={0} minMessage="Payment terms cannot be negative"/>
+              
 
             </div>
 
@@ -143,9 +143,9 @@ const InvoiceForm = (props: UserFormPorps)=> {
     
                       <input type="text" className={`col-span-4 md:col-span-3 ${itemInputStyle}`}{...register(`itemList.${index}.itemName` as const, {required: {value: true, message: "Item name is required"}})}/>
 
-                      <input type="number" className={`col-span-2 3xl:col-span-1 ${itemInputStyle}`} {...register(`itemList.${index}.quantity` as const, {required: {value: true, message: "Item quantity is required"}, min: {value: 0, message: "Item quantity cannot be negative"}})}/>
+                      <input type="number" min="0" className={`col-span-2 3xl:col-span-1 ${itemInputStyle}`} {...register(`itemList.${index}.quantity` as const, {required: {value: true, message: "Item quantity is required"}, min: {value: 0, message: "Item quantity cannot be negative"}})}/>
 
-                      <input type="number" className={`col-span-3 md:col-span-2 3xl:col-span-2 ${itemInputStyle}`} {...register(`itemList.${index}.price` as const, {required: {value: true, message: "Item price is required"},})}/>
+                      <input type="number" min="0" className={`col-span-3 md:col-span-2 3xl:col-span-2 ${itemInputStyle}`} {...register(`itemList.${index}.price` as const, {required: {value: true, message: "Item price is required"},})}/>
                       
                       <p className="col-span-8 md:col-span-1 3xl:col-span-2 px-auto truncate">{formatToPound((watch(`itemList.${index}.quantity`) ??  0) * (watch(`itemList.${index}.price`) ?? 0))}</p>
 

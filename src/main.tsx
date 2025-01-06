@@ -22,7 +22,7 @@ createRoot(document.getElementById('root')!).render(
         draggable
         pauseOnHover
         theme="color"
-        className={"text-xl font-bold font-poppins text-indigo-400/100 bg-slate-800 rounded-lg shadow-lg shadow-black top-6"}/>
+        className={"text-xl font-bold font-poppins text-indigo-400/100 bg-slate-800 rounded-lg shadow-lg shadow-black top-6 m-2"}/>
       </Provider>
     </BrowserRouter>
 )
