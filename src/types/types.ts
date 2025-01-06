@@ -5,7 +5,7 @@ import { FieldErrors, UseFormRegister } from "react-hook-form";
 export type ModalType = {
   showModal: boolean;
   children: ReactNode;
-  handleClose?: () => void;
+  handleClose: () => void;
 };
 
 //type for user form

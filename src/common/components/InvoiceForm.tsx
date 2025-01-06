@@ -6,7 +6,7 @@ import { useEffect } from "react";
 import { addInvoiceThunk, updateInvoiceThunk } from "../services/invoiceService";
 import { formatToPound } from "../utils/utils";
 import { UserFormPorps, InvoiceType } from "@/types/types";
-import LabelInput from "./Label-Input-Error/LabelInput";
+import LabelInput from "./Label-Input/LabelInput";
 import { AppDispatch } from "@/store/store";
 import Button from "./Button/Button";
 

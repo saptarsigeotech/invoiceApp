@@ -52,7 +52,7 @@ const invoiceSlice = createSlice({
         const invoice = state.invoices.find((invoice) => invoice.id === action.payload);
         if (invoice) {
           invoice.status = invoice.status === "pending" ? "paid" : "pending";
-          toast(`Invoice status mark as ${invoice.status}`);
+          toast(`Invoice status marked as ${invoice.status}`);
         }
       });
   },

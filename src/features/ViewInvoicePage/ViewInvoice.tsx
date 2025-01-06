@@ -25,14 +25,10 @@ const ViewInvoice = () => {
   const invoiceId = useParams().id; //extracting the id of the invoice from the URL
 
   const storeInvoiceData = useSelector((state : RootState) => state.invoices.invoices) // getting all invoices from redux store with useSelector hook
-  
 
   const currentInvoice = storeInvoiceData?.filter((invoice) => invoice.id === invoiceId)[0]; //extracting the invoice from the by filtering the id
 
   const { projectDescription, streetAddress, country, invoiceDate, dueDate, clientName, clientEmail, clientStreetAddress, clientCountry, itemList, status} = currentInvoice || {}; 
-
-
-
 
   //destructuring invoice information from the current invoice
   const calculateDueAmount = (arr: { price: number | null, quantity: number | null }[]) : number => arr?.map(item => (item.price?? 0) * (item.quantity ?? 0)).reduce((total: number, currVal: number) => total + currVal); //calulating the amount due for particular invoice

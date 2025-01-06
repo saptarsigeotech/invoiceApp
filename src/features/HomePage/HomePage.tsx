@@ -37,6 +37,7 @@ const HomePage = () => {
 
   const [filteredInvoicesData, setFilteredInvoicesData] = useState(invoicesData); //filtered data for dropdown list
 
+  //used for closing filter after clicking anywhere of the componenet
   useClickAway(filterRef, () => {
     setShowFilterList(false);
   });
@@ -154,7 +155,7 @@ const HomePage = () => {
         {filteredInvoicesData?.length > 0 ? <InvoiceList invoicesData={filteredInvoicesData}/> : <p className="text-center font-bold w-full text-indigo-500/100 mt-10 flex justify-center items-center gap-3"><FaFileInvoice />No invoice to show</p>}
       </div>
       <div>
-        {showModal && <Modal showModal={showModal}>
+        {showModal && <Modal showModal={showModal} handleClose={handleClose}>
           <InvoiceForm handleModalClose={handleClose}/>
         </Modal>}
       </div>
