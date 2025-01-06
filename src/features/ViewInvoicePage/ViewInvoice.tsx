@@ -4,7 +4,7 @@ import { FaChevronLeft } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import Modal from "@/common/components/Modal.tsx";
 import { useDispatch, useSelector } from "react-redux";
-import { markAsPaidThunk, removeInvoiceThunk } from "../invoice/invoiceSlice.ts";
+import { markAsPaidThunk, removeInvoiceThunk } from "@/common/services/invoiceService";
 import { RootState } from "@/store/store.ts";
 import { formatToPound } from "@/common/utils/utils.ts";
 import InvoiceForm from "@/common/components/InvoiceForm.tsx";
@@ -84,7 +84,7 @@ const ViewInvoice = () => {
   return (
     <div className={`text-slate-100 flex flex-col gap-6 font-bold md:w-[70%] xl:w-[40%] mx-auto lg:mt-6 ${showModal ? "bg-opacity-10" : "bg-opacity-100"}`}>
       <div className="flex items-center justify-start gap-3 font-bold">
-        <button onClick={() => history.back()} className="hover:text-indigo-500/100 flex items-center gap-3"><FaChevronLeft className="text-indigo-500/100"/>Go Back</button>
+        <Button variant="goBackBtn" onClick={() => history.back()}><FaChevronLeft className="text-indigo-500/100"/>Go Back</Button>
       </div>
       
       <div className="bg-slate-800 flex flex-col md:flex-row md:item-center md:justify-between gap-4 p-4 rounded-xl md:p-8 shadow-md shadow-slate-950">
@@ -144,7 +144,7 @@ const ViewInvoice = () => {
         </div>
 
         {/* Item list */}
-        <div className="w-full bg-slate-700 rounded-lg">
+        <div className="w-full bg-slate-700 rounded-lg text-sm">
           <div className="p-2 font-normal">
           <table className="table-auto border-separate border-spacing-2 w-full">
             <thead>
@@ -160,8 +160,8 @@ const ViewInvoice = () => {
                 <tr key={index} className="w-full">
                   <td className="text-left">{item.itemName}</td>
                   <td className="text-center">{item.quantity}</td>
-                  <td className="text-right">{formatToPound(item.price ?? 0)}</td>
-                  <td className="text-right truncate">{formatToPound((item.price ?? 0) * (item.quantity ?? 0))}</td>
+                  <td className="text-right break-all">{formatToPound(item.price ?? 0)}</td>
+                  <td className="text-right break-all">{formatToPound((item.price ?? 0) * (item.quantity ?? 0))}</td>
                 </tr>
               ))}
             </tbody>

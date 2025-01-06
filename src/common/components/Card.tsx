@@ -19,7 +19,7 @@ const Card = (props: InvoiceForCard ) => { //this component is a blueprint for e
       <div className="flex items-center justify-between md:w-2/3 lg:gap-10">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between lg:gap-16 items-start gap-3 md:w-2/3 md:ml-3 lg:ml-6">
           <p className="lg:text-left md:w-2/3 ">Due {dateFormat(dueDate)}</p>
-          <p className="text-2xl font-bold md:w-1/3 text-right truncate">{formatToPound(dueAmount)}</p>
+          <p className="text-2xl font-bold w-full md:w-1/3 md:text-right truncate">{formatToPound(dueAmount)}</p>
         </div>
         <div className={`lg:w-36 ${status === "pending" ? "bg-yellow-500 text-orange-500": status === "paid" ? "bg-green-700 text-green-500" : status === "draft" ? "bg-slate-100" : ""} h-12 w-28 rounded-md bg-opacity-10 inset-0 flex justify-center items-center gap-2 font-bold`}>
           <div className={`w-2 h-2 rounded-full  ${status === "pending" ? "bg-orange-500": status === "paid" ? "bg-green-500" : status === "draft" ? "bg-slate-100" : ""}`}></div>

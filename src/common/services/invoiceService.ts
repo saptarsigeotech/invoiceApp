@@ -1,84 +1,7 @@
-// import { InvoiceType } from "@/types/types";
-// import { initialInvoices } from "@/data/initialInvoices.data";
-// import axios from "axios";
-
-// const useLocalStorage = !process.env.REACT_APP_API_URL; // Determines backend or localStorage
-// const BASE_URL = process.env.REACT_APP_API_URL || ""; // Backend API base URL or empty for localStorage
-
-// const LOCAL_STORAGE_KEY = "allInvoices";
-
-// // Helper to load data from localStorage or initialize
-// const loadFromLocalStorage = (): InvoiceType[] => {
-//   const storedInvoices = localStorage.getItem(LOCAL_STORAGE_KEY);
-//   return storedInvoices ? JSON.parse(storedInvoices) : initialInvoices;
-// };
-
-// // Helper to save data to localStorage
-// const saveToLocalStorage = (invoices: InvoiceType[]): void => {
-//   localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(invoices));
-// };
-
-// // **Service Methods**
-
-// export const getInvoices = async (): Promise<InvoiceType[]> => {
-//   if (useLocalStorage) {
-//     return loadFromLocalStorage(); // Fetch from localStorage
-//   } else {
-//     const response = await axios.get(`${BASE_URL}/invoices`);
-//     return response.data; // Fetch from backend
-//   }
-// };
-
-// export const addInvoice = async (newInvoice: InvoiceType): Promise<void> => {
-//   if (useLocalStorage) {
-//     const invoices = loadFromLocalStorage();
-//     invoices.push(newInvoice);
-//     saveToLocalStorage(invoices); // Save to localStorage
-//   } else {
-//     await axios.post(`${BASE_URL}/invoices`, newInvoice); // Save to backend
-//   }
-// };
-
-// export const updateInvoice = async (id: string, updatedInvoice: Partial<InvoiceType>): Promise<void> => {
-//   if (useLocalStorage) {
-//     const invoices = loadFromLocalStorage();
-//     const index = invoices.findIndex((invoice) => invoice.id === id);
-//     if (index !== -1) {
-//       invoices[index] = { ...invoices[index], ...updatedInvoice };
-//       saveToLocalStorage(invoices); // Save to localStorage
-//     }
-//   } else {
-//     await axios.put(`${BASE_URL}/invoices/${id}`, updatedInvoice); // Update in backend
-//   }
-// };
-
-// export const deleteInvoice = async (id: string): Promise<void> => {
-//   if (useLocalStorage) {
-//     const invoices = loadFromLocalStorage();
-//     const filteredInvoices = invoices.filter((invoice) => invoice.id !== id);
-//     saveToLocalStorage(filteredInvoices); // Save to localStorage
-//   } else {
-//     await axios.delete(`${BASE_URL}/invoices/${id}`); // Delete from backend
-//   }
-// };
-
-// export const markAsPaid = async (id: string): Promise<void> => {
-//   if (useLocalStorage) {
-//     const invoices = loadFromLocalStorage();
-//     const index = invoices.findIndex((invoice) => invoice.id === id);
-//     if (index !== -1) {
-//       invoices[index].status = invoices[index].status === "pending" ? "paid" : "pending";
-//       saveToLocalStorage(invoices); // Save to localStorage
-//     }
-//   } else {
-//     await axios.patch(`${BASE_URL}/invoices/${id}/mark-as-paid`); // Mark as paid in backend
-//   }
-// };
-
-
 import { InvoiceType } from '@/types/types';
 import { generateRandomId, calculateDueDate } from '@/common/utils/utils';
 import { initialInvoices } from '@/data/initialInvoices.data';
+import { createAsyncThunk } from '@reduxjs/toolkit';
 
 const API_URL = null
 // const API_URL = process.env.REACT_APP_API_URL 
@@ -106,12 +29,25 @@ export const fetchInvoices = async (): Promise<InvoiceType[]> => {
 };
 
 export const addInvoice = async (invoice: Partial<InvoiceType>): Promise<InvoiceType> => {
-  const newInvoice:  InvoiceType = {
-    ...invoice,
+  const newInvoice: InvoiceType = {
     id: generateRandomId(),
+    city: invoice.city ?? "", // Provide default value for required string fields
+    clientCity: invoice.clientCity ?? "",
+    clientCountry: invoice.clientCountry ?? "",
+    clientEmail: invoice.clientEmail ?? "",
+    clientName: invoice.clientName ?? "",
+    clientPostCode: invoice.clientPostCode ?? 0, // Default for number field
+    clientStreetAddress: invoice.clientStreetAddress ?? "",
+    country: invoice.country ?? "",
+    invoiceDate: invoice.invoiceDate ?? "",
+    paymentTerms: invoice.paymentTerms ?? 0,
     dueDate: calculateDueDate(invoice.invoiceDate ?? "", invoice.paymentTerms ?? 0),
-    dueAmount: invoice.itemList?.reduce((total, item) => total + (item.quantity?? 0) * (item.price ?? 0), 0) || 0,
-    status: "pending",
+    postCode: invoice.postCode ?? 0,
+    projectDescription: invoice.projectDescription ?? "",
+    streetAddress: invoice.streetAddress ?? "",
+    itemList: invoice.itemList ?? [], // Default to empty array
+    dueAmount: invoice.itemList?.reduce((total, item) => total + (item.quantity ?? 0) * (item.price ?? 0), 0) || 0,
+    status: invoice.status ?? "pending", // Default status
   };
 
   if (useLocalStorage) {
@@ -180,3 +116,29 @@ export const markAsPaid = async (id: string): Promise<void> => {
     if (!response.ok) throw new Error("Failed to update invoice status.");
   }
 };
+
+//handeling asyn operations
+export const fetchInvoicesThunk = createAsyncThunk("invoices/fetch", async () => {
+  // return await fetchInvoices();
+  const invoices = await fetchInvoices();
+  // console.log("Fetched Invoices in Thunk:", invoices); // Debug Log
+  return invoices;
+});
+
+export const addInvoiceThunk = createAsyncThunk("invoices/add", async (invoice: Partial<InvoiceType>) => {
+  return await addInvoice(invoice);
+});
+
+export const updateInvoiceThunk = createAsyncThunk("invoices/update", async ({ id, updates }: { id: string; updates: Partial<InvoiceType> }) => {
+  return await updateInvoice(id, updates);
+});
+
+export const removeInvoiceThunk = createAsyncThunk("invoices/remove", async (id: string) => {
+  await removeInvoice(id);
+  return id;
+});
+
+export const markAsPaidThunk = createAsyncThunk("invoices/markAsPaid", async (id: string) => {
+  await markAsPaid(id);
+  return id;
+});

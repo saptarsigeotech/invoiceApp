@@ -5,7 +5,7 @@ import ViewInvoice from "./features/ViewInvoicePage/ViewInvoice"
 import NotFoundPage from "./common/components/errorBoundary/NotFoundPage"
 import { useDispatch } from "react-redux"
 import { useEffect } from "react"
-import { fetchInvoicesThunk } from "./features/invoice/invoiceSlice"
+import { fetchInvoicesThunk } from "./common/services/invoiceService"
 import { AppDispatch } from "./store/store"
 
 
@@ -25,7 +25,7 @@ const App = () => {
     </header>
     <main className="bg-slate-900 pt-6 lg:pt-0 px-5 md:px-0 h-full min-h-screen md:w-screen relative overflow-hidden">
      <Routes>
-     <Route path="invoiceApp/" element={<HomePage/>}/>
+     <Route path="invoiceApp" element={<HomePage/>}/>
       <Route path="invoiceApp/viewInvoice/:id" element={<ViewInvoice/>}/>
       <Route path="*" element={<NotFoundPage/>} /> {/* Catch-all route */}
      </Routes>    

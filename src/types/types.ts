@@ -51,9 +51,12 @@ export type InvoiceForCard = {
     status: string | undefined;
 }
 
-
+//button type
 export type ButtonType = {
   children: React.ReactNode,
   onClick?: MouseEventHandler<HTMLButtonElement>,
-  variant: string
+  variant: string,
+  disabled?: boolean,
+  type?: "button" | "reset" | "submit" | undefined,
+  others?: Record<string,unknown>
 }

@@ -71,16 +71,13 @@ const HomePage = () => {
     }
 
     //on clicking drop down buttons function
-    const handleStatusClick = (filterName: string) => {
+    const handleStatusClick = (filterName: "pending" | "paid" | "all") => {
       switch (filterName) {
         case "pending":
           setFilteredInvoicesData(invoicesData.filter((invoice) => invoice.status === "pending"));
           break;
         case "paid":
           setFilteredInvoicesData(invoicesData.filter((invoice) => invoice.status === "paid"));
-          break;
-        case "draft":
-          setFilteredInvoicesData(invoicesData.filter((invoice) => invoice.status === "draft"));
           break;
         case "all":
           setFilteredInvoicesData(invoicesData); // Reset to full data when "all" is clicked

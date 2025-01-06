@@ -15,6 +15,26 @@
     @apply bg-red-600 py-2 px-4 rounded-full hover:bg-red-800;
   }
 
+  .button-deleteBtnForm {
+    @apply col-span-1 mr-0 flex justify-end text-slate-700 hover:text-red-600;
+  }
+
+  .button-goBackBtn {
+    @apply hover:text-indigo-500/100 flex items-center gap-3;
+  }
+
+  .button-addNewItem {
+    @apply bg-slate-700 w-full h-10 md:h-14 rounded-full mt-2 text-slate-100 font-bold bg-opacity-50 hover:bg-indigo-500/100;
+  }
+
+  .button-cancelBtn {
+    @apply bg-slate-700 bg-opacity-50 h-10 p-6 rounded-full flex justify-center items-center font-bold;
+  }
+
+  .button-submitBtn {
+    @apply bg-indigo-500/100 h-10 w-28 p-6 rounded-full flex justify-center items-center font-bold;
+  }
+
   .button-markAsPaid {
     @apply bg-indigo-500/100 py-2 px-4 rounded-full text-sm sm:text-base hover:bg-indigo-600/100;
   }

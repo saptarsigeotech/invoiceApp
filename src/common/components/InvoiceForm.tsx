@@ -3,11 +3,12 @@ import { MdDelete } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import { useEffect } from "react";
-import { addInvoiceThunk, updateInvoiceThunk } from "@/features/invoice/invoiceSlice";
+import { addInvoiceThunk, updateInvoiceThunk } from "../services/invoiceService";
 import { formatToPound } from "../utils/utils";
 import { UserFormPorps, InvoiceType } from "@/types/types";
 import LabelInput from "./Label-Input-Error/LabelInput";
 import { AppDispatch } from "@/store/store";
+import Button from "./Button/Button";
 
 const InvoiceForm = (props: UserFormPorps)=> {
 
@@ -26,6 +27,7 @@ const InvoiceForm = (props: UserFormPorps)=> {
     control
   });
 
+
   useEffect(() => {
     if (currentInvoice) {
       reset(currentInvoice); // Reset form values to the current invoice data
@@ -35,11 +37,8 @@ const InvoiceForm = (props: UserFormPorps)=> {
   async function onSubmit(updatedData: InvoiceType) {
     try {
       if (currentInvoice) {
-        // Simulate a delay of 3 seconds
         await new Promise((resolve) => setTimeout(resolve, 3000));
         console.log("Submitting the form", updatedData);
-        
-        // Ensure `id` is valid before dispatching
         const id = currentInvoice.id;
         if (!id) {
           throw new Error("Invoice ID is undefined.");
@@ -47,7 +46,6 @@ const InvoiceForm = (props: UserFormPorps)=> {
   
         await dispatch(updateInvoiceThunk({ id, updates: updatedData })).unwrap();
       } else {
-        // Simulate a delay of 5 seconds
         await new Promise((resolve) => setTimeout(resolve, 5000));
         console.log("Submitting the form", updatedData);
   
@@ -115,17 +113,7 @@ const InvoiceForm = (props: UserFormPorps)=> {
               <LabelInput label="Invoice Date" type="date" placeholder="client country name" keyName="invoiceDate" requiredMessage="invoice date" register={register} errors={errors}/>
 
               <div>
-                {/* <label className={labelStyle}>Payment Terms</label>
-                <div className="flex items-start">
-                  <input type="number" placeholder="30"{...register("paymentTerms", {required: {value: true, message: "payment terms is required"},  min: {value: 0, message: "Payment terms cannot be negative"},})} className={inputStyle}/>
-                  <p className="bg-slate-95000 px-1 md:px-2 py-1 md:py-4 mt-2 ml-1 text-slate-500">Days</p>
-                </div>
-                {errors.paymentTerms && <p className={errorStyle}>{errors.paymentTerms.message}</p>} */}
-                <LabelInput parentDivClassName="flex flex-col items-start relative" label="Payment Terms" type="number" placeholder="30" keyName="paymentTerms" requiredMessage="payment terms" register={register} errors={errors} minValue={0} minMessage="Payment terms cannot be negative">
-                  {/* <p className="bg-slate-95000 px-1 md:px-2 py-1 md:py-4 mt-2 ml-1 text-slate-500">Days</p> */}
-                  <span className="px-3 text-sm text-slate-300 bg-none rounded-r-md absolute right-2 top-10 md:top-12">Days</span>
-                </LabelInput>
-
+                <LabelInput parentDivClassName="flex flex-col items-start relative" label="Payment Terms" type="number" placeholder="30 Days" keyName="paymentTerms" requiredMessage="payment terms" register={register} errors={errors} minValue={0} minMessage="Payment terms cannot be negative"/>
               </div>
 
             </div>
@@ -160,19 +148,20 @@ const InvoiceForm = (props: UserFormPorps)=> {
                       <input type="number" className={`col-span-3 md:col-span-2 3xl:col-span-2 ${itemInputStyle}`} {...register(`itemList.${index}.price` as const, {required: {value: true, message: "Item price is required"},})}/>
                       
                       <p className="col-span-8 md:col-span-1 3xl:col-span-2 px-auto truncate">{formatToPound((watch(`itemList.${index}.quantity`) ??  0) * (watch(`itemList.${index}.price`) ?? 0))}</p>
-                      <button type="button" onClick={() => remove(index)} className="col-span-1 mr-0 flex justify-end text-slate-700 hover:text-red-600"><MdDelete/></button>
+
+                      <Button variant="deleteBtnForm" onClick={() => remove(index)} ><MdDelete/></Button>
                     </div>
                   ))}
                   {/* add new item button */}
-                  <button type="button" onClick={() => append({ itemName: "", quantity: 0, price: 0})} className="bg-slate-700 w-full h-10 md:h-14 rounded-full mt-2 text-slate-100 font-bold bg-opacity-50 hover:bg-indigo-500/100">+ Add New Item</button>
+                  <Button variant="addNewItem" onClick={() => append({ itemName: "", quantity: 0, price: 0})}>+ Add New Item</Button>
                 </div>
             </div>
     
           <div className="flex justify-end items-center gap-2">
-            <button className="bg-slate-700 bg-opacity-50 h-10 p-6 rounded-full flex justify-center items-center font-bold" onClick={handleModalClose} disabled={isSubmitting}>Cancel</button>
-            <button type="submit" className={`bg-indigo-500/100 h-10 w-28 p-6 rounded-full flex justify-center items-center font-bold `} disabled={isSubmitting}>
+            <Button variant="cancelBtn" onClick={handleModalClose} disabled={isSubmitting}>Cancel</Button>
+            <Button type="submit" variant="submitBtn" disabled={isSubmitting}>
               {isSubmitting ? <div className="h-5 w-5 border-4 border-slate-100 border-t-indigo-500/100 rounded-3xl animate-spin"></div> : id ? "Update": "Save"} 
-            </button> 
+            </Button> 
           </div>
     </form>
   )
