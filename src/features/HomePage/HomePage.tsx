@@ -12,6 +12,8 @@ import { AiOutlineFileDone } from "react-icons/ai";
 import { GiSandsOfTime } from "react-icons/gi";
 import InvoiceForm from "@/common/components/InvoiceForm";
 import { useLocation, useNavigate } from "react-router-dom";
+import Button from "@/common/components/Button/Button";
+import { FaCirclePlus } from "react-icons/fa6";
 
 
 const HomePage = () => {
@@ -70,6 +72,7 @@ const HomePage = () => {
       setShowFilterList((prevState: boolean)=> !prevState)
     }
 
+
     //on clicking drop down buttons function
     const handleStatusClick = (filterName: "pending" | "paid" | "all") => {
       switch (filterName) {
@@ -85,8 +88,7 @@ const HomePage = () => {
         default:
           setFilteredInvoicesData(invoicesData); // Reset to full data when nothing is clicked
           setShowFilterList(false)
-          break;
-        
+          break;       
       }
 
     }
@@ -106,25 +108,25 @@ const HomePage = () => {
               {/* All filter button */}
               {showFilterList && <div className="absolute top-12 w-44 bg-slate-900 shadow-black shadow-md rounded-lg border-slate-700 border-t-2">
                 <ul className="w-full p-4 flex flex-col justify-center items-start gap-3 font-bold">
-                    <button onClick={() => handleStatusClick("pending")} className="w-full">
+                    <Button variant="filterBtn" onClick={() => handleStatusClick("pending")}>
                       <li className="bg-yellow-500 text-orange-500 w-full p-3 rounded-md bg-opacity-10 text-center hover:bg-slate-100 transition-all flex items-center">
                       <GiSandsOfTime />
                       <div className="ml-auto mr-auto">Pending</div>
                       </li>
-                    </button>
-                    <button onClick={() => handleStatusClick("paid")} className="w-full">
+                    </Button>
+                    <Button variant="filterBtn" onClick={() => handleStatusClick("paid")}>
                       <li className="bg-green-700 text-green-500 w-full p-3 rounded-md bg-opacity-10 text-center hover:bg-slate-100 transition-all flex items-center">
                       <AiOutlineFileDone />
                       <div className="ml-auto mr-auto">Paid</div>
                       </li>
-                    </button>
+                    </Button>
 
-                    <button onClick={() => handleStatusClick("all")} className="w-full">
+                    <Button variant="filterBtn" onClick={() => handleStatusClick("all")}>
                       <li className="bg-indigo-500 text-indigo-500/100 w-full p-3 rounded-md bg-opacity-10 text-center hover:bg-indigo-400 transition-all hover:text-slate-800 flex items-center">
                       <MdOutlineDensitySmall/>
                         <div className="ml-auto mr-auto">All</div>
                       </li>
-                    </button>
+                    </Button>
                   </ul>
               </div>}
 
@@ -135,11 +137,11 @@ const HomePage = () => {
           
 
           {/* Button for creating a new Invoice */}
-          <button className="bg-indigo-500/100 h-12 w-28 md:h-[60px] md:w-48 rounded-full flex items-center gap-2 p-1 md:p-2 hover:bg-indigo-600 transition-all" onClick={handleAdd}>
-            <div className="h-10 w-10 md:h-12 md:w-12 rounded-full bg-slate-100 text-indigo-500/100 text-2xl font-bold flex justify-center items-center gap-3">+</div>
+          <Button variant="newInvoiceBtn" onClick={handleAdd}>
+            <FaCirclePlus className="text-4xl md:text-5xl ml-1 md:ml-0"/>
             <p className="font-bold">New</p>
             <p className=" hidden md:block font-bold">Invoice</p>
-          </button>
+          </Button>
         </div>
       </div>
       <div className="pb-20">

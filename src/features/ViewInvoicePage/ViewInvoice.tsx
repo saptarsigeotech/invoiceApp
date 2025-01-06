@@ -144,7 +144,7 @@ const ViewInvoice = () => {
         </div>
 
         {/* Item list */}
-        <div className="w-full bg-slate-700 rounded-lg text-sm">
+        <div className="w-full bg-slate-700 rounded-lg text-sm md:text-md">
           <div className="p-2 font-normal">
           <table className="table-auto border-separate border-spacing-2 w-full">
             <thead>
@@ -169,7 +169,7 @@ const ViewInvoice = () => {
           </div>
           <div className="flex items-center justify-between p-4 bg-slate-950 rounded-b-lg">
             <p className="text-slate-500">Amount Due</p>
-            <h3 className="text-xl overflow-x-auto">{itemList?.length > 0 ? formatToPound(calculateDueAmount(itemList)) : 0}</h3>
+            <h3 className="text-xl overflow-x-auto break-all text-right">{itemList?.length > 0 ? formatToPound(calculateDueAmount(itemList)) : 0}</h3>
           </div>
         </div>
       </div>
