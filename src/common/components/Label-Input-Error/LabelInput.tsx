@@ -1,24 +1,4 @@
-import { FieldErrors, UseFormRegister } from "react-hook-form";
-
-type LabelInputType = {
-    parentDivClassName ?: string | undefined,
-    label: string,
-    labelStyle?: string,
-    inputStyle?: string,
-    errorStyle?: string,
-    type?: string,
-    min?: string,
-    placeholder: string, 
-    keyName?: string, 
-    requiredMessage?: string, 
-    patternValue?: RegExp | undefined, 
-    patternMessage?: string | undefined, 
-    register?: UseFormRegister<any>;
-    errors?: FieldErrors<any>;
-    minValue?: number,
-    minMessage?: string,
-    children?: React.ReactElement;
-}
+import { LabelInputType } from "@/types/types";
 
 const LabelInput: React.FC<LabelInputType> = ({
   parentDivClassName = "",

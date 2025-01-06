@@ -1,7 +1,7 @@
 import { FaChevronDown } from "react-icons/fa";
 import { FaChevronUp } from "react-icons/fa";
 import InvoiceList from "./InvoiceList";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import Modal from "@/common/components/Modal";
@@ -14,6 +14,8 @@ import InvoiceForm from "@/common/components/InvoiceForm";
 import { useLocation, useNavigate } from "react-router-dom";
 import Button from "@/common/components/Button/Button";
 import { FaCirclePlus } from "react-icons/fa6";
+import { useClickAway } from "react-use";
+
 
 
 const HomePage = () => {
@@ -27,13 +29,17 @@ const HomePage = () => {
   }, [showModal]);
 
   const [showFilterList, setShowFilterList] = useState<boolean>(false); //for displaying filter list (drop down, filter by status list)
+  const filterRef = useRef<HTMLDivElement | null>(null);
 
   const currentInvoicesData  = useSelector((state: RootState) => state.invoices.invoices) //getting all invoices from store
-  console.log("Invoices in Component:", currentInvoicesData)
 
   const [invoicesData, setInvoicesData] = useState<InvoiceType[] | []>(currentInvoicesData) //useState for displaying invoices list
 
   const [filteredInvoicesData, setFilteredInvoicesData] = useState(invoicesData); //filtered data for dropdown list
+
+  useClickAway(filterRef, () => {
+    setShowFilterList(false);
+  });
     
     useEffect(()=>{
       setInvoicesData(currentInvoicesData)
@@ -103,10 +109,10 @@ const HomePage = () => {
         <div className="flex gap-3 md:gap-6 items-center">
           {/* Drop-down buttons */}
           <button className="flex items-center gap-3 md:gap-5" onClick={handleCloseFilter}>       
-              <p className="flex items-center justify-between gap-1 md:font-bold relative">Filter <span className="hidden md:block">by status</span> 
+              <div className="flex items-center justify-between gap-1 md:font-bold relative">Filter <span className="hidden md:block">by status</span> 
 
               {/* All filter button */}
-              {showFilterList && <div className="absolute top-12 w-44 bg-slate-900 shadow-black shadow-md rounded-lg border-slate-700 border-t-2">
+              {showFilterList && <div ref={filterRef} className="absolute top-12 w-44 bg-slate-900 shadow-black shadow-md rounded-lg border-slate-700 border-t-2">
                 <ul className="w-full p-4 flex flex-col justify-center items-start gap-3 font-bold">
                     <Button variant="filterBtn" onClick={() => handleStatusClick("pending")}>
                       <li className="bg-yellow-500 text-orange-500 w-full p-3 rounded-md bg-opacity-10 text-center hover:bg-slate-100 transition-all flex items-center">
@@ -130,7 +136,7 @@ const HomePage = () => {
                   </ul>
               </div>}
 
-              </p>
+              </div>
               {showFilterList ? <FaChevronUp className="text-indigo-500/100"/> : <FaChevronDown className="text-indigo-500/100"/>}
           </button>         
 

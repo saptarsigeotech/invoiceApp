@@ -1,4 +1,5 @@
 import { MouseEventHandler, ReactNode } from "react";
+import { FieldErrors, UseFormRegister } from "react-hook-form";
 
 //type for Modal used in ViewInvoice.tsx and HomePage.tsx
 export type ModalType = {
@@ -59,4 +60,25 @@ export type ButtonType = {
   disabled?: boolean,
   type?: "button" | "reset" | "submit" | undefined,
   others?: Record<string,unknown>
+}
+
+//label-input Type
+export type LabelInputType = {
+  parentDivClassName ?: string | undefined,
+  label: string,
+  labelStyle?: string,
+  inputStyle?: string,
+  errorStyle?: string,
+  type?: string,
+  min?: string,
+  placeholder: string, 
+  keyName?: string, 
+  requiredMessage?: string, 
+  patternValue?: RegExp | undefined, 
+  patternMessage?: string | undefined, 
+  register?: UseFormRegister<any>;
+  errors?: FieldErrors<any>;
+  minValue?: number,
+  minMessage?: string,
+  children?: React.ReactElement;
 }
