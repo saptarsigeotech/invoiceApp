@@ -44,6 +44,7 @@ export type InvoiceType = {
   status?: string | undefined;
 };
 
+
 //invoices on card
 export type InvoiceForCard = {
     id: string | undefined;
@@ -66,7 +67,7 @@ export type ButtonType = {
 //label-input Type
 export type LabelInputType = {
   parentDivClassName ?: string | undefined,
-  label: string,
+  label?: string,
   labelStyle?: string,
   inputStyle?: string,
   errorStyle?: string,

@@ -35,9 +35,9 @@ const LabelInput: React.FC<LabelInputType> = ({
 
   return (
     <div className={parentDivClassName}>
-      <label htmlFor={keyName} className={labelStyle ?? defaultLabelStyle}>
-        {label}
-      </label>
+      {label && <label htmlFor={keyName} className={labelStyle ?? defaultLabelStyle}>
+      {label}
+      </label>}
       <input
         id={keyName}
         type={type}

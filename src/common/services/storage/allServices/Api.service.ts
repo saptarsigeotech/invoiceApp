@@ -1,8 +1,8 @@
 // src/common/services/storage/ApiService.ts
-import { StorageService } from "./Interface/StorageService";
+import { StorageService } from "../Interface/StorageService";
 import { InvoiceType } from "@/types/types";
 
-const API_URL = process.env.REACT_APP_API_URL || "http://localhost:3000"; //need to provide API url here
+const API_URL = null //need to provide API url here
 
 export class ApiService implements StorageService {
   async fetchInvoices(): Promise<InvoiceType[]> {

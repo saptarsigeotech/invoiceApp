@@ -6,7 +6,7 @@ import Modal from "@/common/components/Modal.tsx";
 import { useDispatch, useSelector } from "react-redux";
 import { markAsPaidThunk, removeInvoiceThunk } from "@/common/services/invoice.service";
 import { RootState } from "@/store/store.ts";
-import { formatToPound } from "@/common/utils/utils.ts";
+import { formatToPound } from "@/common/utils/invoice.utils";
 import InvoiceForm from "@/common/components/InvoiceForm.tsx";
 import Button from "@/common/components/Button/Button.tsx";
 import { AppDispatch } from "@/store/store.ts";

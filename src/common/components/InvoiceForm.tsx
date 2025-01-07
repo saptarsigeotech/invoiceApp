@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import { useEffect } from "react";
 import { addInvoiceThunk, updateInvoiceThunk } from "../services/invoice.service";
-import { formatToPound } from "../utils/utils";
+import { formatToPound } from "../utils/invoice.utils";
 import { UserFormPorps, InvoiceType } from "@/types/types";
 import LabelInput from "./Label-Input/LabelInput";
 import { AppDispatch } from "@/store/store";
@@ -141,7 +141,7 @@ const InvoiceForm = (props: UserFormPorps)=> {
                   {fields?.map((field, index) => (
                     <div key={field.id} className="grid grid-cols-9 gap-3 md:gap-5 items-center font-bold text-slate-200">
     
-                      <input type="text" className={`col-span-4 md:col-span-3 ${itemInputStyle}`}{...register(`itemList.${index}.itemName` as const, {required: {value: true, message: "Item name is required"}})}/>
+                      <input type="text" className={`col-span-4 md:col-span-3 ${itemInputStyle}`}{...register(`itemList.${index}.itemName` as const, {required: {value: true, message: " is required"}})}/>
 
                       <input type="number" min="0" className={`col-span-2 3xl:col-span-1 ${itemInputStyle}`} {...register(`itemList.${index}.quantity` as const, {required: {value: true, message: "Item quantity is required"}, min: {value: 0, message: "Item quantity cannot be negative"}})}/>
 

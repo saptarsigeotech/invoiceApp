@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { FaChevronRight } from "react-icons/fa";
-import { formatToPound, dateFormat } from "../utils/utils";
+import { formatToPound, dateFormat } from "../utils/invoice.utils";
 import { InvoiceForCard } from "@/types/types";
 
 const Card = (props: InvoiceForCard ) => { //this component is a blueprint for every invoice that is displayed on the homepage

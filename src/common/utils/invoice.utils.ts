@@ -1,3 +1,5 @@
+import { StorageService } from "../services/storage/Interface/StorageService";
+
 //function to make a number in pound format
 export const formatToPound = (number: number) => { return new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP', }).format(number); };
 
@@ -6,23 +8,18 @@ export const formatToPound = (number: number) => { return new Intl.NumberFormat(
 export const generateRandomId = (): string => {
   // Retrieve the last used invoice ID from localStorage
   let lastInvoiceId = localStorage.getItem("lastInvoiceId");
-
   if (!lastInvoiceId) {
     lastInvoiceId = "IN0000";
   }
-
   let numericPart = parseInt(lastInvoiceId.slice(2));
   numericPart++;
-
   if (numericPart > 9999) {
-    numericPart = 1; // Reset to 1
+    numericPart = 1; // reset to 1
   }
-
   const newInvoiceId = `IN${numericPart.toString().padStart(4, "0")}`;
 
-  // Storing the new ID in localStorage
+  // storing the new ID in localStorage
   localStorage.setItem("lastInvoiceId", newInvoiceId);
-
   return newInvoiceId;
 }
 
@@ -49,25 +46,10 @@ export const dateFormat = (actualDate: string) => {
       return (date + " " + allMonths[Number(month)-1] + " " + year);
     }
 
-
-// format any number that has more than 4 digits, replace part of it with '...'
-
-// export function shortenCurrency(input: string): string {
-//   // Removing the currency symbol and commas
-//   const numericPart = input.replace(/[^0-9]/g, '');
-
-//   // Trimming the string to the first 4 digits
-//   const shortened = numericPart.slice(0, 4);
-
-//   // Returning the shortened version with currency symbol
-//   return `£${shortened}...`;
-// }
-
-// // Example usage
-// const longCurrency = '£493,827,159,999,999,940,000,000,000.00';
-// console.log(shortenCurrency(longCurrency)); // Outputs: £4938...
-
-
+//generating storage service:
+export const generateStorageService = (service) => {
+  return new service();
+}
 
 
 

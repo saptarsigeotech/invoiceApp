@@ -42,10 +42,10 @@ const HomePage = () => {
     setShowFilterList(false);
   });
     
-    useEffect(()=>{
-      setInvoicesData(currentInvoicesData)
-      setFilteredInvoicesData(invoicesData)
-    },[currentInvoicesData, invoicesData])
+  useEffect(()=>{
+    setInvoicesData(currentInvoicesData)
+    setFilteredInvoicesData(invoicesData)
+  },[currentInvoicesData, invoicesData])
 
     const location = useLocation(); 
     const navigate = useNavigate(); //hook for navigating to diferrent paths/ routes
@@ -82,23 +82,9 @@ const HomePage = () => {
 
     //on clicking drop down buttons function
     const handleStatusClick = (filterName: "pending" | "paid" | "all") => {
-      switch (filterName) {
-        case "pending":
-          setFilteredInvoicesData(invoicesData.filter((invoice) => invoice.status === "pending"));
-          break;
-        case "paid":
-          setFilteredInvoicesData(invoicesData.filter((invoice) => invoice.status === "paid"));
-          break;
-        case "all":
-          setFilteredInvoicesData(invoicesData); // Reset to full data when "all" is clicked
-          break;
-        default:
-          setFilteredInvoicesData(invoicesData); // Reset to full data when nothing is clicked
-          setShowFilterList(false)
-          break;       
-      }
-
-    }
+      setFilteredInvoicesData(filterName === "all" ? invoicesData : invoicesData.filter((invoice) => invoice.status === filterName));
+      setShowFilterList(false);
+    };
 
   return (
     <div className={`mt-6 md:pt-6 md:px-16 md:flex md:flex-col md:items-stretch md:mx-auto lg:m-10 xl:w-[1100px] xl:mx-auto ${showModal ? "bg-opacity-10 overflow-y-auto" : "bg-opacity-100"}`}>
@@ -114,27 +100,27 @@ const HomePage = () => {
 
               {/* All filter button */}
               {showFilterList && <div ref={filterRef} className="absolute top-12 w-44 bg-slate-900 shadow-black shadow-md rounded-lg border-slate-700 border-t-2">
-                <ul className="w-full p-4 flex flex-col justify-center items-start gap-3 font-bold">
-                    <Button variant="filterBtn" onClick={() => handleStatusClick("pending")}>
-                      <li className="bg-yellow-500 text-orange-500 w-full p-3 rounded-md bg-opacity-10 text-center hover:bg-slate-100 transition-all flex items-center">
+                <div className="w-full p-4 flex flex-col justify-center items-start gap-3 font-bold">
+                    <div className="w-full" onClick={() => handleStatusClick("pending")}>
+                      <li className="bg-yellow-500 text-orange-500 focus:border-2 focus:border-red w-full p-3 rounded-md bg-opacity-10 text-center hover:bg-slate-100 transition-all flex items-center">
                       <GiSandsOfTime />
-                      <div className="ml-auto mr-auto">Pending</div>
+                      <div className="mx-auto">Pending</div>
                       </li>
-                    </Button>
-                    <Button variant="filterBtn" onClick={() => handleStatusClick("paid")}>
+                    </div>
+                    <div className="w-full" onClick={() => handleStatusClick("paid")}>
                       <li className="bg-green-700 text-green-500 w-full p-3 rounded-md bg-opacity-10 text-center hover:bg-slate-100 transition-all flex items-center">
                       <AiOutlineFileDone />
-                      <div className="ml-auto mr-auto">Paid</div>
+                      <div className="mx-auto">Paid</div>
                       </li>
-                    </Button>
+                    </div>
 
-                    <Button variant="filterBtn" onClick={() => handleStatusClick("all")}>
+                    <div className="w-full" onClick={() => handleStatusClick("all")}>
                       <li className="bg-indigo-500 text-indigo-500/100 w-full p-3 rounded-md bg-opacity-10 text-center hover:bg-indigo-400 transition-all hover:text-slate-800 flex items-center">
                       <MdOutlineDensitySmall/>
-                        <div className="ml-auto mr-auto">All</div>
+                        <div className="mx-auto">All</div>
                       </li>
-                    </Button>
-                  </ul>
+                    </div>
+                </div>
               </div>}
 
               </div>
