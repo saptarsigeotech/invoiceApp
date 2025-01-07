@@ -8,7 +8,7 @@ const Navbar = () => {
             <Link to="invoiceApp"><div className="w-10 h-10 rounded-full bg-slate-100"></div></Link>
       </div>
       <div className="border-l-2 lg:border-t-2 lg:border-l-0 border-indigo-500/100 h-20 w-20 grid place-items-center lg:rounded-br-lg">
-        <img src="./src/assets/profile-picture.jpg" alt="profile picture" className="w-8 h-8 rounded-full"/>
+        <img src="./src/assets/jpgs/profile-picture.jpg" alt="profile picture" className="w-8 h-8 rounded-full"/>
       </div>
     </nav>
   )

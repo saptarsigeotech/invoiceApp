@@ -7,14 +7,12 @@ import { RootState } from "@/store/store";
 import Modal from "@/common/components/Modal";
 import { InvoiceType } from "@/types/types";
 import { FaFileInvoice } from "react-icons/fa6";
-import { MdOutlineDensitySmall } from "react-icons/md";
-import { AiOutlineFileDone } from "react-icons/ai";
-import { GiSandsOfTime } from "react-icons/gi";
 import InvoiceForm from "@/common/components/InvoiceForm";
 import { useLocation, useNavigate } from "react-router-dom";
 import Button from "@/common/components/Button/Button";
 import { FaCirclePlus } from "react-icons/fa6";
 import { useClickAway } from "react-use";
+import DropDown from "../components/DropDown";
 
 
 
@@ -99,29 +97,7 @@ const HomePage = () => {
               <div className="flex items-center justify-between gap-1 md:font-bold relative">Filter <span className="hidden md:block">by status</span> 
 
               {/* All filter button */}
-              {showFilterList && <div ref={filterRef} className="absolute top-12 w-44 bg-slate-900 shadow-black shadow-md rounded-lg border-slate-700 border-t-2">
-                <div className="w-full p-4 flex flex-col justify-center items-start gap-3 font-bold">
-                    <div className="w-full" onClick={() => handleStatusClick("pending")}>
-                      <li className="bg-yellow-500 text-orange-500 focus:border-2 focus:border-red w-full p-3 rounded-md bg-opacity-10 text-center hover:bg-slate-100 transition-all flex items-center">
-                      <GiSandsOfTime />
-                      <div className="mx-auto">Pending</div>
-                      </li>
-                    </div>
-                    <div className="w-full" onClick={() => handleStatusClick("paid")}>
-                      <li className="bg-green-700 text-green-500 w-full p-3 rounded-md bg-opacity-10 text-center hover:bg-slate-100 transition-all flex items-center">
-                      <AiOutlineFileDone />
-                      <div className="mx-auto">Paid</div>
-                      </li>
-                    </div>
-
-                    <div className="w-full" onClick={() => handleStatusClick("all")}>
-                      <li className="bg-indigo-500 text-indigo-500/100 w-full p-3 rounded-md bg-opacity-10 text-center hover:bg-indigo-400 transition-all hover:text-slate-800 flex items-center">
-                      <MdOutlineDensitySmall/>
-                        <div className="mx-auto">All</div>
-                      </li>
-                    </div>
-                </div>
-              </div>}
+              {showFilterList && <DropDown filterRef={filterRef} handleStatusClick={handleStatusClick}/>}
 
               </div>
               {showFilterList ? <FaChevronUp className="text-indigo-500/100"/> : <FaChevronDown className="text-indigo-500/100"/>}
