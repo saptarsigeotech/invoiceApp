@@ -1,11 +1,11 @@
 import { Routes, Route } from "react-router-dom"
 import Navbar from "./common/components/Navbar"
-import HomePage from "./features/Pages/HomePage/HomePage"
-import ViewInvoice from "./features/Pages/ViewInvoicePage/ViewInvoice"
+import HomePage from "./features/Pages/HomePage"
+import ViewInvoice from "./features/Pages/ViewInvoice"
 import NotFoundPage from "./common/components/errorBoundary/NotFoundPage"
 import { useDispatch } from "react-redux"
 import { useEffect } from "react"
-import { fetchInvoicesThunk } from "./common/services/invoiceService"
+import { fetchInvoicesThunk } from "./common/services/invoice.service"
 import { AppDispatch } from "./store/store"
 
 

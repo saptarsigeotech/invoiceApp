@@ -4,7 +4,7 @@ import { FaChevronLeft } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import Modal from "@/common/components/Modal.tsx";
 import { useDispatch, useSelector } from "react-redux";
-import { markAsPaidThunk, removeInvoiceThunk } from "@/common/services/invoiceService";
+import { markAsPaidThunk, removeInvoiceThunk } from "@/common/services/invoice.service";
 import { RootState } from "@/store/store.ts";
 import { formatToPound } from "@/common/utils/utils.ts";
 import InvoiceForm from "@/common/components/InvoiceForm.tsx";

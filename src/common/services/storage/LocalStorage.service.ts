@@ -1,4 +1,4 @@
-import { StorageService } from "./StorageService";
+import { StorageService } from "./Interface/StorageService";
 import { InvoiceType } from "@/types/types";
 import { calculateDueDate, generateRandomId } from "@/common/utils/utils";
 import { initialInvoices } from "@/data/initialInvoices.data";

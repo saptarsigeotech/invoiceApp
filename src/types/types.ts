@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { MouseEventHandler, ReactNode } from "react";
 import { FieldErrors, UseFormRegister } from "react-hook-form";
 

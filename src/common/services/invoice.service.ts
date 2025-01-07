@@ -1,25 +1,8 @@
 import { InvoiceType } from '@/types/types';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { LocalStorageService } from "./storage/LocalStorageService";
-import { ApiService } from "./storage/ApiService";
-import { StorageService } from "./storage/StorageService";
+import { LocalStorageService } from "./storage/LocalStorage.service";
 
-
-export function createStorageService(): StorageService {
-  const storageType = "localStorage"; //define the storage option
-
-  switch (storageType) {
-    //define a case here to use the service
-    case "localStorage":
-      return new LocalStorageService();
-    case "api": 
-      return new ApiService();
-    default:
-      throw new Error("Invalid storage type.");
-  }
-}
-
-const storageService = createStorageService();
+const storageService = new LocalStorageService(); //create a service class and define the service name here
 
 //handelling async operations
 export const fetchInvoicesThunk = createAsyncThunk("invoices/fetch", async () => {

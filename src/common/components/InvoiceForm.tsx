@@ -3,7 +3,7 @@ import { MdDelete } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import { useEffect } from "react";
-import { addInvoiceThunk, updateInvoiceThunk } from "../services/invoiceService";
+import { addInvoiceThunk, updateInvoiceThunk } from "../services/invoice.service";
 import { formatToPound } from "../utils/utils";
 import { UserFormPorps, InvoiceType } from "@/types/types";
 import LabelInput from "./Label-Input/LabelInput";

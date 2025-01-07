@@ -1,6 +1,6 @@
 import { FaChevronDown } from "react-icons/fa";
 import { FaChevronUp } from "react-icons/fa";
-import InvoiceList from "./InvoiceList";
+import InvoiceList from "../components/InvoiceList";
 import { useEffect, useState, useRef } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";

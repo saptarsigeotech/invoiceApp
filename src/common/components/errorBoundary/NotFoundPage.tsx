@@ -7,6 +7,7 @@ const NotFoundPage: React.FC = () => {
   return (
     <div className="flex flex-col items-center space-y-6 justify-center min-h-screen text-center text-white">
       <BiError className="text-6xl text-yellow-500"/>
+      {/* <img src="/src/assets/pngs/crow.png" alt="error image" /> */}
       <h3 className="text-2xl lg:text-4xl font-bold">Oops! Something went wrong.</h3>
       
       <Link
