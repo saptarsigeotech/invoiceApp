@@ -6,6 +6,8 @@ import { initialInvoices } from "@/features/invoice/data/initialInvoices.data";
 const localStorageKey = "allInvoices";
 
 export class LocalStorageService implements StorageService {
+
+  //fetch invoice method
   async fetchInvoices(): Promise<InvoiceType[]> {
     const storedInvoices = localStorage.getItem(localStorageKey);
     if (storedInvoices) {
@@ -14,7 +16,7 @@ export class LocalStorageService implements StorageService {
     localStorage.setItem(localStorageKey, JSON.stringify(initialInvoices));
     return initialInvoices;
   }
-
+  //add invoice method
   async addInvoice(invoice: Partial<InvoiceType>): Promise<InvoiceType> {
     const invoices = await this.fetchInvoices();
     const newInvoice: InvoiceType = {
@@ -29,24 +31,35 @@ export class LocalStorageService implements StorageService {
     return newInvoice;
   }
 
+  //update invoice method
   async updateInvoice(id: string, updates: Partial<InvoiceType>): Promise<InvoiceType> {
     const invoices = await this.fetchInvoices();
     const index = invoices.findIndex((invoice) => invoice.id === id);
+    
     if (index === -1) throw new Error("Invoice not found.");
-    invoices[index] = {
-      ...invoices[index],
+    
+    const existingInvoice = invoices[index];
+ 
+    const updatedInvoice = {
+      ...existingInvoice,
       ...updates,
+      dueDate: calculateDueDate(updates.invoiceDate ?? existingInvoice.invoiceDate, updates.paymentTerms ?? existingInvoice.paymentTerms),
+      dueAmount: updates.itemList?.reduce((total, item) => total + (item.quantity ?? 0) * (item.price ?? 0), 0) || existingInvoice.dueAmount,
     };
+
+    invoices[index] = updatedInvoice;
     localStorage.setItem(localStorageKey, JSON.stringify(invoices));
-    return invoices[index];
+    return updatedInvoice;
   }
 
+  //remove invoice method
   async removeInvoice(id: string): Promise<void> {
     const invoices = await this.fetchInvoices();
     const filteredInvoices = invoices.filter((invoice) => invoice.id !== id);
     localStorage.setItem(localStorageKey, JSON.stringify(filteredInvoices));
   }
 
+  //markAsPaid status method
   async markAsPaid(id: string): Promise<void> {
     const invoices = await this.fetchInvoices();
     const invoice = invoices.find((invoice) => invoice.id === id);

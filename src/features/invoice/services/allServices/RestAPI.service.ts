@@ -4,7 +4,7 @@ import { InvoiceType } from "@/types/types";
 
 const API_URL = null //need to provide API url here
 
-export class ApiService implements StorageService {
+export class RestApiService implements StorageService {
   async fetchInvoices(): Promise<InvoiceType[]> {
     const response = await fetch(`${API_URL}/invoices`);
     if (!response.ok) throw new Error("Failed to fetch invoices.");

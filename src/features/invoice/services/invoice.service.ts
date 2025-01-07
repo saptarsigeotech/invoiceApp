@@ -1,9 +1,24 @@
 import { InvoiceType } from '@/types/types';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { LocalStorageService } from "./allServices/LocalStorage.service";
-import { generateStorageService } from '../utils/invoice.utils';
+import { LocalStorageService } from "./allServices/local-storage.service";
+import { RestApiService } from './allServices/RestAPI.service';
 
-const storageService = generateStorageService(LocalStorageService); //create a service class and use as a parameter
+enum Services {
+ localStorage,
+ RestAPI
+}
+
+const ServiceMap: {[key in Services]: any} = {
+  [Services.localStorage] : LocalStorageService,
+  [Services.RestAPI] : RestApiService
+}
+
+//generate storage service:
+export const generateStorageService = (arg: Services) => {
+  return new ServiceMap[arg];
+}
+
+const storageService = generateStorageService(Services.localStorage); //create a service class and use as a parameter
 //handelling async operations
 export const fetchInvoicesThunk = createAsyncThunk("invoices/fetch", async () => {
   return await storageService.fetchInvoices();
