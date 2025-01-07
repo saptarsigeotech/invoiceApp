@@ -1,6 +1,6 @@
 import { InvoiceType } from '@/types/types';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { LocalStorageService } from "./storage/allServices/LocalStorage.service";
+import { LocalStorageService } from "./allServices/LocalStorage.service";
 import { generateStorageService } from '../utils/invoice.utils';
 
 const storageService = generateStorageService(LocalStorageService); //create a service class and use as a parameter

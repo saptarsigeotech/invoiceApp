@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit'
-import invoiceReducer from "../common/slices/invoiceSlice"
+import invoiceReducer from "../features/invoice/slices/invoiceSlice"
 
 export const store = configureStore({
   reducer: {

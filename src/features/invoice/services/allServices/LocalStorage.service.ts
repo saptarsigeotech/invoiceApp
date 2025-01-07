@@ -1,6 +1,6 @@
 import { StorageService } from "../Interface/StorageService";
 import { InvoiceType } from "@/types/types";
-import { calculateDueDate, generateRandomId } from "@/common/utils/invoice.utils";
+import { calculateDueDate, generateRandomId } from "@/features/invoice/utils/invoice.utils";
 import { initialInvoices } from "@/features/invoice/data/initialInvoices.data";
 
 const localStorageKey = "allInvoices";

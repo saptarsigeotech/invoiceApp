@@ -1,6 +1,6 @@
 
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchInvoicesThunk, addInvoiceThunk, updateInvoiceThunk, removeInvoiceThunk, markAsPaidThunk} from "@/common/services/invoice.service";
+import { fetchInvoicesThunk, addInvoiceThunk, updateInvoiceThunk, removeInvoiceThunk, markAsPaidThunk} from "@/features/invoice/services/invoice.service";
 import { InvoiceType } from "@/types/types";
 import { toast } from 'react-toastify';
 

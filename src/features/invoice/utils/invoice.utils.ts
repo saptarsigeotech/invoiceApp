@@ -1,4 +1,4 @@
-import { StorageService } from "../services/storage/Interface/StorageService";
+import { StorageService } from "../services/Interface/StorageService";
 
 //function to make a number in pound format
 export const formatToPound = (number: number) => { return new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP', }).format(number); };
@@ -46,8 +46,8 @@ export const dateFormat = (actualDate: string) => {
       return (date + " " + allMonths[Number(month)-1] + " " + year);
     }
 
-//generating storage service:
-export const generateStorageService = (service) => {
+//generate storage service:
+export const generateStorageService = (service : new ()  => StorageService) => {
   return new service();
 }
 

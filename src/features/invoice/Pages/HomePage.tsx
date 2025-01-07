@@ -92,8 +92,9 @@ const HomePage = () => {
           <p className="flex items-center justify-between gap-1 text-slate-500"><span className="hidden md:block">There are </span>{filteredInvoicesData?.length} <span className="hidden md:block">total </span>invoices</p>
         </div>
         <div className="flex gap-3 md:gap-6 items-center">
+          
           {/* Drop-down buttons */}
-          <button className="flex items-center gap-3 md:gap-5" onClick={handleCloseFilter}>       
+          <div className="flex items-center gap-3 md:gap-5" onClick={handleCloseFilter}>       
               <div className="flex items-center justify-between gap-1 md:font-bold relative">Filter <span className="hidden md:block">by status</span> 
 
               {/* All filter button */}
@@ -101,9 +102,7 @@ const HomePage = () => {
 
               </div>
               {showFilterList ? <FaChevronUp className="text-indigo-500/100"/> : <FaChevronDown className="text-indigo-500/100"/>}
-          </button>         
-
-          
+          </div>         
 
           {/* Button for creating a new Invoice */}
           <Button variant="newInvoiceBtn" onClick={handleAdd}>

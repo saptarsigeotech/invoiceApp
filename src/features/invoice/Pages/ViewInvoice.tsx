@@ -4,9 +4,9 @@ import { FaChevronLeft } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import Modal from "@/common/components/Modal.tsx";
 import { useDispatch, useSelector } from "react-redux";
-import { markAsPaidThunk, removeInvoiceThunk } from "@/common/services/invoice.service";
+import { markAsPaidThunk, removeInvoiceThunk } from "@/features/invoice/services/invoice.service";
 import { RootState } from "@/store/store.ts";
-import { formatToPound } from "@/common/utils/invoice.utils";
+import { formatToPound } from "@/features/invoice/utils/invoice.utils";
 import InvoiceForm from "@/common/components/InvoiceForm.tsx";
 import Button from "@/common/components/Button/Button.tsx";
 import { AppDispatch } from "@/store/store.ts";
@@ -23,20 +23,14 @@ const ViewInvoice = () => {
     }, [showModal]);
 
   const invoiceId = useParams().id; //extracting the id of the invoice from the URL
-
   const storeInvoiceData = useSelector((state : RootState) => state.invoices.invoices) // getting all invoices from redux store with useSelector hook
-
   const currentInvoice = storeInvoiceData?.filter((invoice) => invoice.id === invoiceId)[0]; //extracting the invoice from the by filtering the id
-
   const { projectDescription, streetAddress, country, invoiceDate, dueDate, clientName, clientEmail, clientStreetAddress, clientCountry, itemList, status} = currentInvoice || {}; 
 
   //destructuring invoice information from the current invoice
   const calculateDueAmount = (arr: { price: number | null, quantity: number | null }[]) : number => arr?.map(item => (item.price?? 0) * (item.quantity ?? 0)).reduce((total: number, currVal: number) => total + currVal); //calulating the amount due for particular invoice
-
   const capitalize = (str: string) => str.charAt(0).toUpperCase() + str.slice(1); //function for capitalizing a string
-
   const tableHeadStyle: string = "text-right text-slate-500"; //style for table heads
-
   const location = useLocation();
 
   // Sync modal state with URL query parameter
@@ -44,7 +38,6 @@ const ViewInvoice = () => {
     const params = new URLSearchParams(location.search);
     const modalState = params.get("modal");
     return modalState === "true" ? setShowModal(true) : setShowModal(false)
-
   }, [location]);
 
 

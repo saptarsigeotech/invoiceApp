@@ -28,8 +28,8 @@ const LabelInput: React.FC<LabelInputType> = ({
         ...(requiredMessage && {
           required: { value: true, message: `${requiredMessage} is required` },
         }),
-        ...(patternValue && { pattern: { value: patternValue, message: patternMessage || "Invalid pattern" } }),
-        ...(minValue && { min: { value: minValue, message: minMessage || "Value is too small" } }),
+        ...(patternValue && { pattern: { value: patternValue, message: patternMessage || "invalid pattern" } }),
+        ...(minValue && { min: { value: minValue, message: minMessage || "value is too small" } }),
       })
     : undefined;
 
