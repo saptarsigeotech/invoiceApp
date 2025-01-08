@@ -22,6 +22,29 @@ export const generateRandomId = (): string => {
   return newInvoiceId;
 }
 
+// export const generateRandomId = (existingIds: string[]): string => {
+//   // Extract the numeric parts of all existing IDs
+//   const numericIds = existingIds
+//     .map((id) => parseInt(id.slice(2)))
+//     .sort((a, b) => a - b);
+
+//   // Find the smallest missing number
+//   let nextId = 1;
+//   for (let i = 0; i < numericIds.length; i++) {
+//     if (numericIds[i] !== nextId) {
+//       break; // Found a gap
+//     }
+//     nextId++;
+//   }
+
+//   // Format the new ID
+//   const newInvoiceId = `IN${nextId.toString().padStart(4, "0")}`;
+
+//   // Store the new ID in localStorage as the last used ID
+//   localStorage.setItem("lastInvoiceId", newInvoiceId);
+//   return newInvoiceId;
+// };
+
 //function for calculating due date from invoice date and payment terms
 
   export const calculateDueDate = (invoiceDate : string, paymentTerms: number) => { 
