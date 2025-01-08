@@ -3,7 +3,7 @@ import { AiOutlineFileDone } from 'react-icons/ai'
 import { GiSandsOfTime } from 'react-icons/gi'
 import { MdOutlineDensitySmall } from 'react-icons/md'
 
-const DropDown = ({filterRef, handleStatusClick}: {filterRef: MutableRefObject<HTMLDivElement | null>, handleStatusClick: (filter: "pending" | "paid" | "all") => void}) => {
+const InvoiceFilter = ({filterRef, handleStatusClick}: {filterRef: MutableRefObject<HTMLDivElement | null>, handleStatusClick: (filter: "pending" | "paid" | "all") => void}) => {
   return (
     <div ref={filterRef} className="absolute top-12 w-44 bg-slate-900 shadow-black shadow-md rounded-lg border-slate-700 border-t-2">
                 <div className="w-full p-4 flex flex-col justify-center items-start gap-3 font-bold">
@@ -32,4 +32,4 @@ const DropDown = ({filterRef, handleStatusClick}: {filterRef: MutableRefObject<H
   )
 }
 
-export default DropDown
+export default InvoiceFilter

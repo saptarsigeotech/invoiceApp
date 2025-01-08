@@ -6,9 +6,9 @@ import { useEffect } from "react";
 import { addInvoiceThunk, updateInvoiceThunk } from "../../features/invoice/services/invoice.service";
 import { formatToPound } from "../../features/invoice/utils/invoice.utils";
 import { UserFormPorps, InvoiceType } from "@/types/types";
-import LabelInput from "./Label-Input/LabelInput";
+import LabelInput from "./label-input/LabelInput";
 import { AppDispatch } from "@/store/store";
-import Button from "./Button/Button";
+import Button from "./button/Button";
 
 const InvoiceForm = (props: UserFormPorps)=> {
 

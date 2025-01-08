@@ -1,7 +1,7 @@
 import { InvoiceType } from '@/types/types';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { LocalStorageService } from "./allServices/local-storage.service";
-import { RestApiService } from './allServices/RestAPI.service';
+import { LocalStorageService } from "./allServices/localStorage.service";
+import { RestApiService } from './allServices/restAPI.service';
 
 enum Services {
  localStorage,

@@ -8,7 +8,7 @@ import { markAsPaidThunk, removeInvoiceThunk } from "@/features/invoice/services
 import { RootState } from "@/store/store.ts";
 import { formatToPound } from "@/features/invoice/utils/invoice.utils";
 import InvoiceForm from "@/common/components/InvoiceForm.tsx";
-import Button from "@/common/components/Button/Button.tsx";
+import Button from "@/common/components/button/Button";
 import { AppDispatch } from "@/store/store.ts";
 
 const ViewInvoice = () => {
@@ -172,3 +172,5 @@ const ViewInvoice = () => {
 }
 
 export default ViewInvoice
+
+

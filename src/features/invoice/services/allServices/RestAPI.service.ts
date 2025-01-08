@@ -1,5 +1,5 @@
 // src/common/services/storage/ApiService.ts
-import { StorageService } from "../Interface/StorageService";
+import { StorageService } from "../interface/storage.service";
 import { InvoiceType } from "@/types/types";
 
 const API_URL = null //need to provide API url here

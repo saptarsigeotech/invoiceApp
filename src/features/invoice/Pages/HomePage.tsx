@@ -9,10 +9,10 @@ import { InvoiceType } from "@/types/types";
 import { FaFileInvoice } from "react-icons/fa6";
 import InvoiceForm from "@/common/components/InvoiceForm";
 import { useLocation, useNavigate } from "react-router-dom";
-import Button from "@/common/components/Button/Button";
+import Button from "@/common/components/button/Button";
 import { FaCirclePlus } from "react-icons/fa6";
 import { useClickAway } from "react-use";
-import DropDown from "../components/DropDown";
+import InvoiceFilter from "../components/InvoiceFilter";
 
 
 
@@ -52,11 +52,7 @@ const HomePage = () => {
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const modalState = params.get("modal");
-    if (modalState === "true") {
-      setShowModal(true);
-    } else {
-      setShowModal(false);
-    }
+    return modalState === "true" ? setShowModal(true) : setShowModal(false)
   }, [location]);
 
   //on clicking "edit" button modal of the edit page will be opened
@@ -98,7 +94,7 @@ const HomePage = () => {
               <div className="flex items-center justify-between gap-1 md:font-bold relative">Filter <span className="hidden md:block">by status</span> 
 
               {/* All filter button */}
-              {showFilterList && <DropDown filterRef={filterRef} handleStatusClick={handleStatusClick}/>}
+              {showFilterList && <InvoiceFilter filterRef={filterRef} handleStatusClick={handleStatusClick}/>}
 
               </div>
               {showFilterList ? <FaChevronUp className="text-indigo-500/100"/> : <FaChevronDown className="text-indigo-500/100"/>}
@@ -125,3 +121,5 @@ const HomePage = () => {
 };
 
 export default HomePage;
+
+
