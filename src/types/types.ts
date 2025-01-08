@@ -12,7 +12,8 @@ export type ModalType = {
 //type for user form
 export type UserFormPorps = {
   handleModalClose: () => void;
-  id?: string | undefined;
+  showModal: boolean,
+  handleClose: () => void
 };
 
 //type for single invoice item

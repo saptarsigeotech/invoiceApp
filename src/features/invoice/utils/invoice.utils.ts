@@ -1,4 +1,3 @@
-
 //function to make a number in pound format
 export const formatToPound = (number: number) => { return new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP', }).format(number); };
 
@@ -7,6 +6,7 @@ export const formatToPound = (number: number) => { return new Intl.NumberFormat(
 export const generateRandomId = (): string => {
   // Retrieve the last used invoice ID from localStorage
   let lastInvoiceId = localStorage.getItem("lastInvoiceId");
+
   if (!lastInvoiceId) {
     lastInvoiceId = "IN0000";
   }

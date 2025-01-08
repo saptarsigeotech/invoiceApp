@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux"
 import { useEffect } from "react"
 import { fetchInvoicesThunk } from "./features/invoice/services/invoice.service"
 import { AppDispatch } from "./store/store"
+import Layout from "./features/invoice/layouts/InvoiceLayout"
 
 
 const App = () => {
@@ -17,7 +18,6 @@ const App = () => {
     dispatch(fetchInvoicesThunk()); // Fetch invoices on app load
   }, [dispatch]);
 
-
   return (
     <div className="font-poppins bg-slate-900 lg:flex h-full">
     <header >
@@ -25,8 +25,10 @@ const App = () => {
     </header>
     <main className="bg-slate-900 pt-6 lg:pt-0 px-5 md:px-0 h-full min-h-screen md:w-screen relative overflow-hidden">
      <Routes>
-     <Route path="invoiceApp" element={<HomePage/>}/>
-      <Route path="invoiceApp/viewInvoice/:id" element={<ViewInvoice/>}/>
+      <Route path="/" element={<Layout/> }>
+            <Route path="/" element={<HomePage/>}/>
+            <Route path="viewInvoice/:id" element={<ViewInvoice/>}/>
+      </Route>
       <Route path="*" element={<NotFoundPage/>} /> {/* Catch-all route */}
      </Routes>    
     </main>

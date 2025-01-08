@@ -1,79 +1,24 @@
 
-import { useLocation, useNavigate, useParams } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import { FaChevronLeft } from "react-icons/fa";
-import { useEffect, useState } from "react";
-import Modal from "@/common/components/Modal.tsx";
-import { useDispatch, useSelector } from "react-redux";
-import { markAsPaidThunk, removeInvoiceThunk } from "@/features/invoice/services/invoice.service";
-import { RootState } from "@/store/store.ts";
 import { formatToPound } from "@/features/invoice/utils/invoice.utils";
-import InvoiceForm from "@/common/components/InvoiceForm.tsx";
 import Button from "@/common/components/button/Button";
-import { AppDispatch } from "@/store/store.ts";
+import useEdit from "../hooks/useEdit";
 
 const ViewInvoice = () => {
 
-  //stroing the state in session storage to handle the modal view after browser refresh
-    const [showModal, setShowModal] = useState<boolean>(
-      JSON.parse(sessionStorage.getItem("showModalEditInvoice") || "false")
-    );
-    
-    useEffect(() => {
-      sessionStorage.setItem("showModalEditInvoice", JSON.stringify(showModal));
-    }, [showModal]);
-
-  const invoiceId = useParams().id; //extracting the id of the invoice from the URL
-  const storeInvoiceData = useSelector((state : RootState) => state.invoices.invoices) // getting all invoices from redux store with useSelector hook
-  const currentInvoice = storeInvoiceData?.filter((invoice) => invoice.id === invoiceId)[0]; //extracting the invoice from the by filtering the id
-  const { projectDescription, streetAddress, country, invoiceDate, dueDate, clientName, clientEmail, clientStreetAddress, clientCountry, itemList, status} = currentInvoice || {}; 
-
-  //destructuring invoice information from the current invoice
-  const calculateDueAmount = (arr: { price: number | null, quantity: number | null }[]) : number => arr?.map(item => (item.price?? 0) * (item.quantity ?? 0)).reduce((total: number, currVal: number) => total + currVal); //calulating the amount due for particular invoice
-  const capitalize = (str: string) => str.charAt(0).toUpperCase() + str.slice(1); //function for capitalizing a string
-  const tableHeadStyle: string = "text-right text-slate-500"; //style for table heads
-  const location = useLocation();
-
-  // Sync modal state with URL query parameter
-  useEffect(() => {
-    const params = new URLSearchParams(location.search);
-    const modalState = params.get("modal");
-    return modalState === "true" ? setShowModal(true) : setShowModal(false)
-  }, [location]);
-
-
- //on clicking "edit" button modal of the edit page will be opened
-  const handleEdit = () => {
-    setShowModal(true)
-    navigate(`?modal=true`, { replace: true }); // Update URL with modal=true
-  }
-
-  const dispatch = useDispatch< AppDispatch >(); //hook for using reducer functions 
   const navigate = useNavigate(); //hook for navigating to diferrent paths/ routes
 
-  //function for deleting the invoice
-  const handleDelete = (id: string | undefined) => {
-      if(id){
-      dispatch(removeInvoiceThunk(id));
-      navigate("/invoiceApp");
-      } 
-  }
+// const showModal=true;
+const tableHeadStyle: string = "text-right text-slate-500"; //style for table heads
 
-  //function to make the status of invoice as paid
-  const handleMarkAsPaid = (id: string | undefined) => {
-    if(id) return dispatch(markAsPaidThunk(id));
-  }
+const {invoiceId, currentInvoice, calculateDueAmount, capitalize, handleEdit, handleDelete, handleMarkAsPaid, showModal} = useEdit();
 
-  // function for closing modal
-  const handleClose = () => { 
-    setShowModal((prevState)=> !prevState)
-    navigate("?modal=false", { replace: true });
-  }
-
-
+const { projectDescription, streetAddress, country, invoiceDate, dueDate, clientName, clientEmail, clientStreetAddress, clientCountry, itemList, status} = currentInvoice || {};
   return (
     <div className={`text-slate-100 flex flex-col gap-6 font-bold md:w-[70%] xl:w-[40%] mx-auto lg:mt-6 ${showModal ? "bg-opacity-10" : "bg-opacity-100"}`}>
       <div className="flex items-center justify-start gap-3 font-bold">
-        <Button variant="goBackBtn" onClick={() => history.back()}><FaChevronLeft className="text-indigo-500/100"/>Go Back</Button>
+        <Button variant="goBackBtn" onClick={() => navigate("/")}><FaChevronLeft className="text-indigo-500/100"/>Go Back</Button>
       </div>
       
       <div className="bg-slate-800 flex flex-col md:flex-row md:item-center md:justify-between gap-4 p-4 rounded-xl md:p-8 shadow-md shadow-slate-950">
@@ -162,11 +107,7 @@ const ViewInvoice = () => {
           </div>
         </div>
       </div>
-      
-      {showModal && 
-      <Modal showModal={showModal} handleClose={handleClose}>
-          <InvoiceForm handleModalClose={handleClose} id={invoiceId}/>
-        </Modal>} 
+
     </div>
   )
 }

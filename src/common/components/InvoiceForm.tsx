@@ -9,15 +9,18 @@ import { UserFormPorps, InvoiceType } from "@/types/types";
 import LabelInput from "./label-input/LabelInput";
 import { AppDispatch } from "@/store/store";
 import Button from "./button/Button";
+import Modal from "./Modal";
+import { useParams } from "react-router-dom";
 
 const InvoiceForm = (props: UserFormPorps)=> {
 
-  const {handleModalClose, id} = props; //destructuring props
+  const {handleModalClose, showModal, handleClose} = props; //destructuring props
+
+  const {id:invoiceId} = useParams();
 
   const dispatch = useDispatch<AppDispatch>(); //using dispatch for disptaching the action for reducers 
 
-  const currentInvoice = useSelector((state : RootState ) =>(id ? state.invoices.invoices?.filter((invoice) => invoice.id === id)[0]: null)) // getting all invoices from redux store with useSelector hook
-
+  const currentInvoice = useSelector((state : RootState ) =>(invoiceId ? state.invoices.invoices?.filter((invoice) => invoice.id === invoiceId)[0]: null)) // getting current invoice from redux store with useSelector hook
 
 //react hook form data
   const { register, handleSubmit, formState , reset, control, watch } = useForm<InvoiceType>(); //hook from react-hook-form
@@ -26,7 +29,6 @@ const InvoiceForm = (props: UserFormPorps)=> {
     name: 'itemList',
     control
   });
-
 
   useEffect(() => {
     if (currentInvoice) {
@@ -38,17 +40,13 @@ const InvoiceForm = (props: UserFormPorps)=> {
     try {
       if (currentInvoice) {
         await new Promise((resolve) => setTimeout(resolve, 3000));
-        console.log("Submitting the form", updatedData);
         const id = currentInvoice.id;
         if (!id) {
-          throw new Error("Invoice ID is undefined.");
+          throw new Error("Invoice ID is not found.");
         }
-  
         await dispatch(updateInvoiceThunk({ id, updates: updatedData })).unwrap();
       } else {
         await new Promise((resolve) => setTimeout(resolve, 5000));
-        console.log("Submitting the form", updatedData);
-  
         await dispatch(addInvoiceThunk(updatedData)).unwrap();
       }
     } catch (error) {
@@ -64,8 +62,9 @@ const InvoiceForm = (props: UserFormPorps)=> {
   const itemInputStyle: string = "bg-slate-700 px-3 md:px-5 py-2 md:py-4 mt-2 border-1 md:border-2 border-slate-700 rounded-md bg-opacity-50 focus:outline-none focus:ring focus:ring-indigo-500/100 text-sm font-normal"
 
   return (
+    <Modal showModal={showModal} handleClose={handleClose}>
     <form onSubmit={handleSubmit(onSubmit)} className="text-slate-100 flex flex-col gap-8 px-10 py-10" noValidate>
-          <h1 className="text-2xl font-bold">{id ? <p>Edit <span className="text-slate-500 font-normal">#</span>{id}</p> : "Add Invoice"}</h1>
+          <h1 className="text-2xl font-bold">{invoiceId ? <p>Edit <span className="text-slate-500 font-normal">#</span>{invoiceId}</p> : "Add Invoice"}</h1>
          
          {/* Bill From */}
           <div className="flex flex-col gap-5">
@@ -110,12 +109,9 @@ const InvoiceForm = (props: UserFormPorps)=> {
           <div className="flex flex-col gap-5">
             <div className="grid grid-cols-2 gap-5">
 
-              <LabelInput label="Invoice Date" type="date" placeholder="client country name" keyName="invoiceDate" requiredMessage="invoice date" register={register} errors={errors}/>
-
-              
+              <LabelInput label="Invoice Date" type="date" placeholder="client country name" keyName="invoiceDate" requiredMessage="invoice date" register={register} errors={errors}/>      
               <LabelInput parentDivClassName="flex flex-col items-start relative" label="Payment Terms" type="number" min="0" placeholder="ex. 30 days" keyName="paymentTerms" requiredMessage="payment terms" register={register} errors={errors} minValue={0} minMessage="Payment terms cannot be negative"/>
-              
-
+          
             </div>
 
             <LabelInput label="Project Description" placeholder="project information" keyName="projectDescription" requiredMessage="project description" register={register} errors={errors}/>
@@ -160,10 +156,11 @@ const InvoiceForm = (props: UserFormPorps)=> {
           <div className="flex justify-end items-center gap-2">
             <Button variant="cancelBtn" onClick={handleModalClose} disabled={isSubmitting}>Cancel</Button>
             <Button type="submit" variant="submitBtn" disabled={isSubmitting}>
-              {isSubmitting ? <div className="h-5 w-5 border-4 border-slate-100 border-t-indigo-500/100 rounded-3xl animate-spin"></div> : id ? "Update": "Save"} 
+              {isSubmitting ? <div className="h-5 w-5 border-4 border-slate-100 border-t-indigo-500/100 rounded-3xl animate-spin"></div> : invoiceId ? "Update": "Save"} 
             </Button> 
           </div>
     </form>
+    </Modal> 
   )
 }
 
