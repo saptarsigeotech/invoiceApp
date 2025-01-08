@@ -7,10 +7,7 @@ import { FaCirclePlus } from "react-icons/fa6";
 import InvoiceFilter from "../components/InvoiceFilter";
 import useAdd from "../hooks/useAdd";
 
-
-
 const HomePage = () => {
-
 const {showModal,handleCloseFilter,showFilterList,filterRef,filteredInvoicesData,handleStatusClick,handleAdd}= useAdd();
 
   return (

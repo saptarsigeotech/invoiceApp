@@ -5,13 +5,13 @@ import { InvoiceType } from "@/types/types";
 const API_URL = null //need to provide API url here
 
 export class RestApiService implements StorageService {
-  async fetchInvoices(): Promise<InvoiceType[]> {
+  async fetchInvoices() {
     const response = await fetch(`${API_URL}/invoices`);
     if (!response.ok) throw new Error("Failed to fetch invoices.");
     return response.json();
   }
 
-  async addInvoice(invoice: Partial<InvoiceType>): Promise<InvoiceType> {
+  async addInvoice(invoice: Omit<InvoiceType, "id" | "dueData" | "dueAmount">): Promise<InvoiceType> {
     const response = await fetch(`${API_URL}/invoices`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -21,7 +21,7 @@ export class RestApiService implements StorageService {
     return response.json();
   }
 
-  async updateInvoice(id: string, updates: Partial<InvoiceType>): Promise<InvoiceType> {
+  async updateInvoice(id: string, updates: Omit<InvoiceType, 'id' | 'dueData' | 'dueAmount'>): Promise<InvoiceType> {
     const response = await fetch(`${API_URL}/invoices/${id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },

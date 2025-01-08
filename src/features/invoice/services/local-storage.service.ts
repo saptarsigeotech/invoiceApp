@@ -17,7 +17,7 @@ export class LocalStorageService implements StorageService {
     return initialInvoices;
   }
   //add invoice method
-  async addInvoice(invoice: Partial<InvoiceType>): Promise<InvoiceType> {
+  async addInvoice(invoice: Omit<InvoiceType, 'id' | 'dueData' | 'dueAmount'>): Promise<InvoiceType> {
     const invoices = await this.fetchInvoices();
     const newInvoice: InvoiceType = {
       id: generateRandomId(),
