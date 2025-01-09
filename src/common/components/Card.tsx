@@ -2,12 +2,11 @@ import { Link } from "react-router-dom";
 import { FaChevronRight } from "react-icons/fa";
 import { formatToPound, dateFormat } from "../../features/invoice/utils/invoice.utils";
 import { InvoiceForCard } from "@/types/types";
+import InvoiceStatus from "./InvoiceStatus";
 
 const Card = (props: InvoiceForCard ) => { //this component is a blueprint for every invoice that is displayed on the homepage
 
   const {id, clientName, dueDate, dueAmount, status} = props; //destructuring from props
-
-  const capitalize = (str: string | undefined) => typeof str === "string" && str.charAt(0).toUpperCase() + str.slice(1); //function for capitalizing a string
 
   return (
     <Link to={`viewInvoice/${id}`}>
@@ -21,10 +20,7 @@ const Card = (props: InvoiceForCard ) => { //this component is a blueprint for e
           <p className="lg:text-left md:w-2/3 ">Due {dateFormat(dueDate)}</p>
           <p className="text-2xl font-bold w-full md:w-1/3 md:text-right truncate overflow-hidden">{formatToPound(dueAmount)}</p>
         </div>
-        <div className={`lg:w-36 ${status === "pending" ? "bg-yellow-500 text-orange-500": status === "paid" ? "bg-green-700 text-green-500" : status === "draft" ? "bg-slate-100" : ""} h-12 w-28 rounded-md bg-opacity-10 inset-0 flex justify-center items-center gap-2 font-bold`}>
-          <div className={`w-2 h-2 rounded-full  ${status === "pending" ? "bg-orange-500": status === "paid" ? "bg-green-500" : status === "draft" ? "bg-slate-100" : ""}`}></div>
-          <p className="bg-opacity-100">{capitalize(status)}</p>
-        </div>
+        <InvoiceStatus status={status}/>
         <FaChevronRight className="hidden md:block text-indigo-500/100 hover:text-indigo-300"/>
       </div>
     </div>

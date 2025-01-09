@@ -5,13 +5,56 @@ import { FaFileInvoice } from "react-icons/fa6";
 import Button from "@/common/components/button/Button";
 import { FaCirclePlus } from "react-icons/fa6";
 import InvoiceFilter from "../components/InvoiceFilter";
-import useAdd from "../hooks/useAdd";
+import { useEffect, useRef, useState } from "react";
+import { useClickAway } from "react-use";
+import { useOutletContext } from "react-router-dom";
+import useInvoiceInfo from "../hooks/useInvoiceInfo";
 
 const HomePage = () => {
-const {showModal,handleCloseFilter,showFilterList,filterRef,filteredInvoicesData,handleStatusClick,handleAdd}= useAdd();
+
+  const { invoicesData, setInvoicesData, storeInvoicesData}= useInvoiceInfo();
+
+  const [showFilterList, setShowFilterList] = useState<boolean>(false); //for displaying filter list (drop down, filter by status list)
+  const filterRef = useRef<HTMLDivElement | null>(null);
+
+  const [filteredInvoicesData, setFilteredInvoicesData] = useState(invoicesData); //filtered data for invoice filter list
+
+  useClickAway(filterRef, () => {
+    setShowFilterList(false);
+  });
+
+  const { handleOpen } = useOutletContext<{handleOpen: () => void }>(); //getting handleOpen from Layout
+
+  useEffect(() => {
+    if (storeInvoicesData) {
+      setInvoicesData(storeInvoicesData);
+    }
+  }, [storeInvoicesData, setInvoicesData]);
+
+  useEffect(() => {
+    // Only update filtered data if invoicesData is available
+    if (invoicesData && invoicesData.length > 0) {
+      setFilteredInvoicesData(invoicesData);
+    }
+  }, [invoicesData]);
+
+    //function for closing the filter list
+    const handleCloseFilter = () => {
+        setShowFilterList((prevState: boolean)=> !prevState)
+      }
+   
+    //on clicking drop down buttons function
+    const handleStatusClick = (filterName: "pending" | "paid" | "all") => {
+        if(invoicesData) {
+          setFilteredInvoicesData(filterName === "all" ? invoicesData : invoicesData.filter((invoice) => invoice.status === filterName));
+          setShowFilterList(false);
+        }
+      };
+  
+
 
   return (
-    <div className={`mt-6 md:pt-6 md:px-16 md:flex md:flex-col md:items-stretch md:mx-auto lg:m-10 xl:w-[1100px] xl:mx-auto ${showModal ? "bg-opacity-10 overflow-y-auto" : "bg-opacity-100"}`}>
+    <div className={`mt-6 md:pt-6 md:px-16 md:flex md:flex-col md:items-stretch md:mx-auto lg:m-10 xl:w-[1100px] xl:mx-auto`}>
       <div className="text-slate-100 flex items-start justify-between">
         <div>
           <h3 className="text-2xl md:text-3xl font-bold">Invoices</h3>
@@ -31,7 +74,7 @@ const {showModal,handleCloseFilter,showFilterList,filterRef,filteredInvoicesData
           </div>         
 
           {/* Button for creating a new Invoice */}
-          <Button variant="newInvoiceBtn" onClick={handleAdd}>
+          <Button variant="newInvoiceBtn" onClick={handleOpen}>
             <FaCirclePlus className="text-4xl md:text-5xl ml-1 md:ml-0"/>
             <p className="font-bold">New</p>
             <p className=" hidden md:block font-bold">Invoice</p>
@@ -39,7 +82,7 @@ const {showModal,handleCloseFilter,showFilterList,filterRef,filteredInvoicesData
         </div>
       </div>
       <div className="pb-20">
-        {filteredInvoicesData?.length > 0 ? <InvoiceList invoicesData={filteredInvoicesData}/> : <p className="text-center font-bold w-full text-indigo-500/100 mt-10 flex justify-center items-center gap-3"><FaFileInvoice />No invoice to show</p>}
+        {filteredInvoicesData && filteredInvoicesData?.length > 0 ? <InvoiceList invoicesData={filteredInvoicesData}/> : <p className="text-center font-bold w-full text-indigo-500/100 mt-10 flex justify-center items-center gap-3"><FaFileInvoice />No invoice to show</p>}
       </div>
     </div>
   );

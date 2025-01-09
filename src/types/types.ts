@@ -4,7 +4,7 @@ import { FieldErrors, UseFormRegister } from "react-hook-form";
 
 //type for Modal used in ViewInvoice.tsx and HomePage.tsx
 export type ModalType = {
-  showModal: boolean;
+  showModal: boolean | undefined;
   children: ReactNode;
   handleClose: () => void;
 };
@@ -12,8 +12,9 @@ export type ModalType = {
 //type for user form
 export type UserFormPorps = {
   handleModalClose: () => void;
-  showModal: boolean,
-  handleClose: () => void
+  showModal: boolean | undefined;
+  handleClose: () => void;
+  handleOpen: () => void;
 };
 
 //type for single invoice item
@@ -42,9 +43,11 @@ export type InvoiceType = {
   streetAddress: string;
   itemList: invoiceItem[];
   dueAmount?: number;
-  status?: string | undefined;
+  status?: "pending" | "paid" | undefined;
 };
-
+export type InvoiceStatusProps = {
+  status: "pending" | "paid" | undefined ; 
+};
 
 //invoices on card
 export type InvoiceForCard = {
@@ -52,7 +55,7 @@ export type InvoiceForCard = {
     clientName: string;
     dueDate: string ;
     dueAmount: number;
-    status: string | undefined;
+    status: "pending" | "paid" | undefined;
 }
 
 //button type

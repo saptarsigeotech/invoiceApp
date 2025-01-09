@@ -8,7 +8,7 @@ import { Provider } from 'react-redux'
 import { ToastContainer } from 'react-toastify';
 
 createRoot(document.getElementById('root')!).render(
-    <BrowserRouter basename='/invoiceApp'>
+    <BrowserRouter basename='/invoiceApp/'>
       <Provider store={store}>
         <App />
         <ToastContainer 

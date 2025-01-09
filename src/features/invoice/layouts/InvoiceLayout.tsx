@@ -1,38 +1,35 @@
-import React, { useEffect, useState } from "react";
-import { Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Outlet, useSearchParams } from "react-router-dom";
 import InvoiceForm from "@/common/components/InvoiceForm";
 
 
 const Layout: React.FC= () => {
 
-  const navigate = useNavigate();
-  const location = useLocation();
+  const [showModal, setShowModal] = useState<boolean>(false);
 
-  const [showModal, setShowModal] = useState<boolean>(
-    JSON.parse(sessionStorage.getItem("showModalInvoice") || "false")
-  );
-  
-  const { id: invoiceId } = useParams();
+  const [searchParams, setSearchParams] = useSearchParams(); 
+
+  //setting as ?modal=true
+  const handleOpen = () => {
+    searchParams.set("modal", "true");
+    setSearchParams(searchParams); 
+  };
+
+  const handleClose = () => {
+    searchParams.delete("modal");
+    setSearchParams(searchParams); 
+  };
 
   useEffect(() => {
-    sessionStorage.setItem("showModalInvoice", JSON.stringify(showModal));
-  }, [showModal]);
+    const isModalOpen = searchParams.get("modal") === "true";
+    setShowModal(isModalOpen);
+  }, [searchParams]); 
 
-  useEffect(() => {
-    const params = new URLSearchParams(location.search);
-    const modalState = params.get("modal");
-    return modalState === "true" ? setShowModal(true) : setShowModal(false)
-  }, [location, invoiceId]);
-
-  const handleClose = () => { 
-    setShowModal(false)
-    navigate("?modal=false", { replace: true });
-  }
 
   return (
    <>
-   <Outlet /> 
-   <InvoiceForm key={location.pathname} handleModalClose={handleClose} showModal={showModal} handleClose={handleClose}/>
+   <Outlet context={{ showModal, handleOpen, handleClose }}/> 
+   <InvoiceForm key={location.pathname} handleModalClose={handleClose} showModal={showModal} handleClose={handleClose} handleOpen={handleOpen}/>
    </>
   );
 };
