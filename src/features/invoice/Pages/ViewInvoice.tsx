@@ -16,13 +16,10 @@ const ViewInvoice = () => {
 
   const { projectDescription, streetAddress, country, invoiceDate, dueDate, clientName, clientEmail, clientStreetAddress, clientCountry, itemList, status} = currentInvoice || {};
 
-  const { handleOpen } = useOutletContext<{
-    handleOpen: () => void;
-  }>();
+  const { handleOpen } = useOutletContext<{ handleOpen: () => void }>();
 
 // const showModal=true;
 const tableHeadStyle: string = "text-right text-slate-500"; //style for table heads
-
 
 //on clicking "edit" button modal of the edit page will be opened
 const handleEdit = () => {
@@ -39,7 +36,6 @@ const handleDelete = (id: string | undefined) => {
     dispatch(removeInvoiceThunk(id));
     navigate("/");
   }
-  
 }
 
 //function to make the status of invoice as paid
@@ -81,7 +77,7 @@ const handleMarkAsPaid = (id: string | undefined) => {
           </div>
         </div>
 
-        <div className="flex justify-between md:justify-start md:grid md:grid-cols-3">
+        <div className="flex justify-between md:justify-start md:grid md:grid-cols-3 space-x-5 md:space-x-2">
           <div className="flex flex-col justify-between">
             <div className="mb-4">
               <p className="text-slate-500 font-normal">Invoice Date</p> 
@@ -93,9 +89,9 @@ const handleMarkAsPaid = (id: string | undefined) => {
             </div>
           </div>
           <div className="flex flex-col md:flex-row flex-1 gap-4 justify-between md:justify-start text-right md:text-left md:col-span-2 md:grid md:grid-cols-2">
-              <div className="space-x-2">
+              <div>
                 <p className="text-slate-500 font-normal">Bill To</p>
-                <h3>{clientName}</h3>
+                <h3 className="break-all">{clientName}</h3>
                 <p  className="text-wrap md:w-1/2">{clientStreetAddress}, {clientCountry}</p>
               </div>
             <div>
@@ -121,10 +117,10 @@ const handleMarkAsPaid = (id: string | undefined) => {
             <tbody>
               {itemList && itemList?.length > 0 && itemList?.map((item, index) => (
                 <tr key={index} className="w-full">
-                  <td className="text-left">{item.itemName}</td>
-                  <td className="text-center">{item.quantity}</td>
-                  <td className="text-right break-all">{formatToPound(item.price ?? 0)}</td>
-                  <td className="text-right break-all">{formatToPound((item.price ?? 0) * (item.quantity ?? 0))}</td>
+                  <td className="text-left w-4/12 break-all overflow-hidden">{item.itemName}</td>
+                  <td className="text-center w-2/12 break-all">{item.quantity}</td>
+                  <td className="text-right w-2/12 break-all">{formatToPound(item.price ?? 0)}</td>
+                  <td className="text-right w-4/12 break-all">{formatToPound((item.price ?? 0) * (item.quantity ?? 0))}</td>
                 </tr>
               ))}
             </tbody>
