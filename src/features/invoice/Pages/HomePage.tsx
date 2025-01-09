@@ -12,7 +12,7 @@ import useInvoiceInfo from "../hooks/useInvoiceInfo";
 
 const HomePage = () => {
 
-  const { invoicesData, setInvoicesData, storeInvoicesData}= useInvoiceInfo();
+  const { invoicesData, setInvoicesData, allInvoices}= useInvoiceInfo();
 
   const [showFilterList, setShowFilterList] = useState<boolean>(false); //for displaying filter list (drop down, filter by status list)
   const filterRef = useRef<HTMLDivElement | null>(null);
@@ -26,10 +26,10 @@ const HomePage = () => {
   const { handleOpen } = useOutletContext<{handleOpen: () => void }>(); //getting handleOpen from Layout
 
   useEffect(() => {
-    if (storeInvoicesData) {
-      setInvoicesData(storeInvoicesData);
+    if (allInvoices) {
+      setInvoicesData(allInvoices);
     }
-  }, [storeInvoicesData, setInvoicesData]);
+  }, [allInvoices, setInvoicesData]);
 
   useEffect(() => {
     // Only update filtered data if invoicesData is available

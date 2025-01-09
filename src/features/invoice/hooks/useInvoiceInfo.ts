@@ -9,17 +9,17 @@ const useInvoiceInfo = () => {
 
   const invoiceId = useParams().id; //extracting the id of the invoice from the URL
   
-  const storeInvoicesData = useSelector((state : RootState) => state.invoices.invoices) // getting all invoices from redux store with useSelector hook
+  const allInvoices = useSelector((state : RootState) => state.invoices.invoices) // getting all invoices from redux store with useSelector hook
 
-  const currentInvoice = storeInvoicesData?.filter((invoice) => invoice.id === invoiceId)[0]; //extracting the invoice from the by filtering the id
+  const currentInvoice = allInvoices?.filter((invoice) => invoice.id === invoiceId)[0]; //extracting the invoice from the by filtering the id
 
-  const [invoicesData, setInvoicesData] = useState<InvoiceType[] | []>(storeInvoicesData) //useState for displaying invoices list
+  const [invoicesData, setInvoicesData] = useState<InvoiceType[] | []>(allInvoices) //useState for displaying invoices list
 
   if(invoiceId){
     return {invoiceId, currentInvoice}
   }
   else{
-    return { invoicesData, setInvoicesData, storeInvoicesData}
+    return { invoicesData, setInvoicesData, allInvoices}
   }
 
 }
