@@ -43,10 +43,10 @@ export type InvoiceType = {
   streetAddress: string;
   itemList: invoiceItem[];
   dueAmount?: number;
-  status?: "pending" | "paid" ;
+  status: "pending" | "paid" | undefined;
 };
 export type InvoiceStatusProps = {
-  status: "pending" | "paid" ; 
+  status: "pending" | "paid" | undefined; 
 };
 
 //invoices on card
@@ -55,7 +55,7 @@ export type InvoiceForCard = {
     clientName: string;
     dueDate: string ;
     dueAmount: number;
-    status: "pending" | "paid" ;
+    status: "pending" | "paid" | undefined;
 }
 
 //button type

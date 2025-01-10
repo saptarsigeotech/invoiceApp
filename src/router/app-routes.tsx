@@ -26,7 +26,7 @@ const routes = createBrowserRouter(
     },
   ],
   {
-    basename: "/invoiceApp/", // Specify the base path
+    basename: "/invoiceApp/", 
   }
 );
 

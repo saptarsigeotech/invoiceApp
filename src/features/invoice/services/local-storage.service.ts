@@ -1,6 +1,6 @@
 import { StorageService } from "../interface/storage.service";
 import { InvoiceType } from "@/types/types";
-import { calculateDueDate, generateRandomId } from "@/features/invoice/utils/invoice.utils";
+import { calculateDueDate, generateInvoiceId} from "@/features/invoice/utils/invoice.utils";
 import { initialInvoices } from "@/features/invoice/data/initialInvoices.data";
 
 const localStorageKey = "allInvoices";
@@ -20,7 +20,7 @@ export class LocalStorageService implements StorageService {
   async addInvoice(invoice: Omit<InvoiceType, 'id' | 'dueData' | 'dueAmount'>): Promise<InvoiceType> {
     const invoices = await this.fetchInvoices();
     const newInvoice: InvoiceType = {
-      id: generateRandomId(),
+      id: generateInvoiceId(invoices),
       ...invoice,
       dueDate: calculateDueDate(invoice.invoiceDate ?? "", invoice.paymentTerms ?? 0),
       dueAmount: invoice.itemList?.reduce((total, item) => total + (item.quantity ?? 0) * (item.price ?? 0), 0) || 0,

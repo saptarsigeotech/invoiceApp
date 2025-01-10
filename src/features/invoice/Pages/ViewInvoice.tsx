@@ -21,12 +21,6 @@ const ViewInvoice = () => {
 // const showModal=true;
 const tableHeadStyle: string = "text-right text-slate-500"; //style for table heads
 
-//on clicking "edit" button modal of the edit page will be opened
-const handleEdit = () => {
-  handleOpen()
-  // navigate(`?modal=true`, { replace: true }); // Update URL with modal=true
-}
-
 const dispatch = useDispatch< AppDispatch >(); //hook for using reducer functions 
 const navigate = useNavigate(); //hook for navigating to diferrent paths/ routes
 
@@ -59,7 +53,7 @@ const handleMarkAsPaid = (id: string | undefined) => {
         </div>
 
         <div className="flex justify-end gap-4 font-bold mt-4 md:mt-0">
-          <Button variant="edit" onClick={handleEdit}>Edit</Button>
+          <Button variant="edit" onClick={handleOpen}>Edit</Button>
           <Button variant="delete" onClick={() => handleDelete(invoiceId)}>Delete</Button>
           <Button variant="markAsPaid" onClick={() => handleMarkAsPaid(invoiceId)}>{status === "paid" ? "Mark as Pending" : "Mark as Paid" }</Button>
         </div>

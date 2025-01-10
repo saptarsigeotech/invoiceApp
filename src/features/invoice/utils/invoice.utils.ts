@@ -1,3 +1,4 @@
+import { InvoiceType } from "@/types/types";
 
 //function to make a number in pound format
 export const formatToPound = (number: number) => { return new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP', }).format(number); };
@@ -9,58 +10,26 @@ export const capitalize = (str: string) => str.charAt(0).toUpperCase() + str.sli
 export const calculateDueAmount = (arr: { price: number | null, quantity: number | null }[]) : number => arr?.map(item => (item.price?? 0) * (item.quantity ?? 0)).reduce((total: number, currVal: number) => total + currVal); //calulating the amount due for particular invoice
 
 
-// function to generate a random id with combination of IN letters and 4 numbers strating from 0000
-export const generateRandomId = (): string => {
-  // Retrieve the last used invoice ID from localStorage
-  let lastInvoiceId = localStorage.getItem("lastInvoiceId");
+//generate new Invoice ID
+export const generateInvoiceId = (invoices: InvoiceType[]): string => {
+ 
+  const validInvoiceIds = invoices
+    .map((invoice) => invoice.id)
+    .filter((id): id is string => !!id && /^IN\d{4}$/.test(id)); 
+  
+  const lastInvoiceId = validInvoiceIds.reduce((maxId, currentId) => {
+    const numericPart = parseInt(currentId.slice(2));
+    const maxNumericPart = parseInt(maxId.slice(2));
+    return numericPart > maxNumericPart ? currentId : maxId;
+  }, "IN0000");
 
-  if (!lastInvoiceId) {
-    lastInvoiceId = "IN0000";
-  }
   let numericPart = parseInt(lastInvoiceId.slice(2));
   numericPart++;
-  if (numericPart > 9999) {
-    numericPart = 1; // reset to 1
-  }
+
   const newInvoiceId = `IN${numericPart.toString().padStart(4, "0")}`;
 
-  // storing the new ID in localStorage
-  localStorage.setItem("lastInvoiceId", newInvoiceId);
   return newInvoiceId;
-}
-
-// type Invoice = {
-//   id: string;
-//   [key: string]: any; // other fields can be added to the invoice object
-// };
-
-// export const generateNewInvoiceId = (invoices: Invoice[]): string => {
-//   if (invoices.length === 0) {
-//     // If the array is empty, start from "IN0001"
-//     return "IN0001";
-//   }
-
-//   // Get the ID of the last element in the array
-//   const lastInvoiceId = invoices[invoices.length - 1].id;
-
-//   // Check if the last invoice ID is in the correct "IN0000" pattern
-//   if (/^IN\d{4}$/.test(lastInvoiceId)) {
-//     // Extract the numeric part, increment it and create the new ID
-//     let numericPart = parseInt(lastInvoiceId.slice(2));
-//     numericPart++;
-
-//     // If the numeric part exceeds 9999, reset to 1
-//     if (numericPart > 9999) {
-//       numericPart = 1;
-//     }
-
-//     // Generate the new invoice ID with the incremented number
-//     return `IN${numericPart.toString().padStart(4, "0")}`;
-//   } else {
-//     // If the last ID is not in the correct pattern, return "IN0001"
-//     return "IN0001";
-//   }
-// };
+};
 
 //function for calculating due date from invoice date and payment terms
 
