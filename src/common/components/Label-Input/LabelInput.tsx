@@ -47,7 +47,7 @@ const LabelInput: React.FC<LabelInputType> = ({
         className={inputStyle ?? defaultInputStyle}
       />
       {children}
-      {keyName && errors?.[keyName]?.message && <p className={errorStyle ?? defaultErrorStyle}>{errors[keyName].message}</p>}
+      {keyName && errors?.[keyName]?.message && typeof errors[keyName].message === "string" && <p className={errorStyle ?? defaultErrorStyle}>{errors[keyName].message}</p>}
     </div>
   );
 };
