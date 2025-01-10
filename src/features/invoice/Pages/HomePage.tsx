@@ -58,7 +58,7 @@ const HomePage = () => {
       <div className="text-slate-100 flex items-start justify-between">
         <div>
           <h3 className="text-2xl md:text-3xl font-bold">Invoices</h3>
-          <p className="flex items-center justify-between gap-1 text-slate-500"><span className="hidden md:block">There are </span>{filteredInvoicesData?.length} <span className="hidden md:block">total </span>invoices</p>
+          <p className="flex items-center justify-between gap-1 text-slate-500"><span className="hidden md:block">There are </span>{filteredInvoicesData && filteredInvoicesData.length > 0 ? filteredInvoicesData.length : 0} <span className="hidden md:block">total </span>{filteredInvoicesData && (filteredInvoicesData.length in [0, 1]) ? "invoice" : "invoices"}</p>
         </div>
         <div className="flex gap-3 md:gap-6 items-center">
           

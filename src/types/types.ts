@@ -78,7 +78,7 @@ export type LabelInputType = {
   type?: string,
   min?: string,
   placeholder: string, 
-  keyName?: string | undefined, 
+  keyName: string, 
   requiredMessage?: string, 
   patternValue?: RegExp | undefined, 
   patternMessage?: string | undefined, 
