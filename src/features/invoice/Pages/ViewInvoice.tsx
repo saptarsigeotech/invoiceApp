@@ -99,7 +99,7 @@ const handleMarkAsPaid = (id: string | undefined) => {
         {/* Item list */}
         <div className="w-full bg-slate-700 rounded-lg text-sm md:text-md">
           <div className="p-2 font-normal">
-          <table className="table-auto border-separate border-spacing-2 w-full">
+          <table className="border-separate border-spacing-2 w-full table-fixed">
             <thead>
               <tr>
                 <th className="text-left text-slate-500">Item Name</th>
@@ -111,10 +111,10 @@ const handleMarkAsPaid = (id: string | undefined) => {
             <tbody>
               {itemList && itemList?.length > 0 && itemList?.map((item, index) => (
                 <tr key={index} className="w-full">
-                  <td className="text-left w-4/12 break-all overflow-hidden">{item.itemName}</td>
+                  <td className="text-left w-4/12 overflow-hidden text-ellipsis whitespace-nowrap">{item.itemName}</td>
                   <td className="text-center w-2/12 break-all">{item.quantity}</td>
-                  <td className="text-right w-2/12 break-all">{formatToPound(item.price ?? 0)}</td>
-                  <td className="text-right w-4/12 break-all">{formatToPound((item.price ?? 0) * (item.quantity ?? 0))}</td>
+                  <td className="text-right w-2/12 truncate">{formatToPound(item.price ?? 0)}</td>
+                  <td className="text-right w-4/12 truncate">{formatToPound((item.price ?? 0) * (item.quantity ?? 0))}</td>
                 </tr>
               ))}
             </tbody>
